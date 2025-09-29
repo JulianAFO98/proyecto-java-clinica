@@ -1,8 +1,9 @@
 package proyecto.modelo;
 
+import proyecto.*;
 import java.util.ArrayList;
 import java.util.Date;
-
+import proyecto.modelo.Excepciones.NoExistePacienteException;
 import proyecto.modelo.Habitacion.Habitacion;
 import proyecto.modelo.interfaces.IMedico;
 import proyecto.modelo.paciente.Paciente;
@@ -11,36 +12,53 @@ public class Clinica {
     private String nombreClinica;
     private String telefono;
     private String direccion;
-    private SalaEsperaPrivada salaEsperaPrivada;
+    private SalaEsperaPrivada salaEsperaPrivada = new SalaEsperaPrivada(null);
     private ArrayList<Paciente> patio = new ArrayList<Paciente>();
     private ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
     private ArrayList<ConsultaMedica> consultaMedicas = new ArrayList<ConsultaMedica>();
-    private ArrayList<Paciente> pacientesAtendidos = new ArrayList<Paciente>();
+    private ArrayList<Paciente> pacientesRegistrados = new ArrayList<Paciente>();
+    private ArrayList<Paciente> pacientesEnAtencion = new ArrayList<Paciente>();
     private ArrayList<IMedico> medicos = new ArrayList<IMedico>();
     private ArrayList<Internacion> internaciones = new ArrayList<Internacion>();
 
-    public Clinica(String nombreClinica, String telefono, String direccion, SalaEsperaPrivada salaEsperaPrivada) {
+    public Clinica(String nombreClinica, String telefono, String direccion) {
         this.nombreClinica = nombreClinica;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.salaEsperaPrivada = salaEsperaPrivada;
+    }
+    //Agregarlo a la base de datos
+    public void registrarPaciente(Paciente p){
+        pacientesRegistrados.add(p);
     }
 
-
-    public void ingresarPaciente(Paciente p){
-        //if(salaEsperaPrivada.getPaciente() == null){
-           // salaEsperaPrivada.setPaciente(p); // metodo ingresar
-        //}else {
-            //calcular paciente ganador
-
-            //ganador a la sala
-
+    public void ingresarPaciente(Paciente p) throws NoExistePacienteException{
+        //Verificar si el paciente existe en nuestra "db"
+        boolean existePaciente = pacientesRegistrados.contains(p);
+       
+        //si no existe tiramos excepcion
+        if(!existePaciente){
+            throw new NoExistePacienteException("No esta registrado el paciente");
+        }
+        p.setNumeroOrdenPropio();
+        if(salaEsperaPrivada.getPaciente() == null){
+           salaEsperaPrivada.setPaciente(p); 
+        }else {
+            Paciente pacienteActual = salaEsperaPrivada.getPaciente();
+            Paciente pacienteGanador =pacienteActual.decidirSala(p);
             //perdedor al patio
-        //}
+            if(pacienteActual.equals(pacienteGanador)){
+               patio.add(p);
+            }else {
+                patio.add(pacienteActual);
+                //ganador a la sala
+                salaEsperaPrivada.setPaciente(pacienteGanador);
+            }
+        }
     }
-
+    
     public void atiendePaciente(IMedico m,Paciente p){
         //buscamos el menor numero de entre la salaPrivada o el patio 
+        
 
         //lo extremos de alli
 
@@ -54,10 +72,8 @@ public class Clinica {
         medicos.add(m);
     }
 
-    public void internarPaciente(Paciente p){
-        //generar nueva internacion
-
-        //agregar internacion al a las internaciones
+    public void internarPaciente(Paciente p,Habitacion h){
+        internaciones.add(new Internacion(p,h,new Date())); // preguntar
     }
 
     public void mostrarTodosLosMedicos(){
@@ -66,12 +82,26 @@ public class Clinica {
         }
     }
 
-    public void mostrarConsultasMedico(IMedico m,Date fecha){
+    public void mostrarTodosLosPacientes(){
+        for (Paciente p : pacientesRegistrados) {
+            System.out.println(p.toString());
+        }
+    }
+
+    /*public void mostrarConsultasMedico(IMedico m,Date fecha){
         for (ConsultaMedica cm : consultaMedicas) {
 
         }
     }
+    */
 
+    public void egresaPaciente(Paciente p){
+
+    }
+
+    public void egresaPaciente(Paciente p,Date fecha){
+
+    }
     
 
 

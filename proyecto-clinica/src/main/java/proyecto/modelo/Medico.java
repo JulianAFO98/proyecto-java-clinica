@@ -5,7 +5,7 @@ import proyecto.modelo.interfaces.IMedico;
 public class Medico extends Persona implements IMedico{
     protected int numeroMatricula;
     protected double sueldoBase;
-
+    //protected boolean isDisponible; todo
     public Medico(String dni, String nombre, String apellido, String ciudad, String telefono, Domicilio domicilio,int numeroMatricula, double sueldoBase) {
         super(dni, nombre, apellido, ciudad, telefono, domicilio);
         this.numeroMatricula = numeroMatricula;

@@ -18,7 +18,7 @@ public class DecoratorPosgradoMagister extends DecoratorPosgrado {
 
 	@Override
 	public String toString() {
-		return "DecoratorPosgradoMagister "+this.encapsulado.getNombre()+" sueldo: "+this.calcularSueldo();
+		return "Magister: "+this.encapsulado.getNombre()+" con especialidad: "+this.encapsulado.getEspecialidad()+" sueldo: "+this.calcularSueldo();
 	}
 
 	

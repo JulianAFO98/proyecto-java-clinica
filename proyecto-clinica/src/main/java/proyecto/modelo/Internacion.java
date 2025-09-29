@@ -22,7 +22,6 @@ public class Internacion {
 	public void darDeAlta(Date fechaDadoDeAlta) {
 		long diffMillis = fechaDadoDeAlta.getTime() - this.fechaInternacion.getTime();
 		int dias = (int) TimeUnit.DAYS.convert(diffMillis, TimeUnit.MILLISECONDS);
-		
 		setCantidadDiasInternacion(dias);
 	}
 	

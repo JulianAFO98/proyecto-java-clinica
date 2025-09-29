@@ -17,6 +17,6 @@ public class DecoratorPosgradoDoctorado extends DecoratorPosgrado {
 
 	@Override
 	public String toString() {
-		return "DecoratorPosgradoDoctorado "+this.encapsulado.getNombre()+" sueldo: "+this.calcularSueldo();
+		return "Doctor: "+this.encapsulado.getNombre()+" con especialidad: "+this.encapsulado.getEspecialidad()+" sueldo: "+this.calcularSueldo();
 	}
 }
