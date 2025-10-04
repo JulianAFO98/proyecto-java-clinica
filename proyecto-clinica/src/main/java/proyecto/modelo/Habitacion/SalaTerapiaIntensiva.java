@@ -17,6 +17,11 @@ public class SalaTerapiaIntensiva extends Habitacion {
 		return  Math.pow(costoTerapiaIntensiva, cantDias);
 	}
 
+	public  String getTipoHabitacion(){
+		return "Sala de Terapia Intensiva";
+	}
+
+
 	@Override
 	public String toString() {
 		return "SalaTerapiaIntensiva " + super.toString();

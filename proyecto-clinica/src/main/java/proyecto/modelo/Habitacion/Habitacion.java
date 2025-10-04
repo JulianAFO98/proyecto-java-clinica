@@ -13,6 +13,8 @@ public abstract class Habitacion {
 		return precioBase;
 	}
 
+	public abstract String getTipoHabitacion();
+
 	@Override
 	public String toString() {
 		return "Habitacion [precioBase=" + precioBase + "] ";

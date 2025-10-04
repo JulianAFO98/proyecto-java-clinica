@@ -32,6 +32,10 @@ public class HabitacionPrivada extends Habitacion{
 		return ocupada;
 	}
 
+	public  String getTipoHabitacion(){
+		return "Privada";
+	}
+
 	public void setOcupada(boolean ocupada) {
 		this.ocupada = ocupada;
 	}

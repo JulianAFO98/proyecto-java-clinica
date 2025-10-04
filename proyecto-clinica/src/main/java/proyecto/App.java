@@ -1,9 +1,14 @@
 package proyecto;
 
+import java.util.Date;
 import proyecto.modelo.Clinica;
 import proyecto.modelo.Domicilio;
 import proyecto.modelo.Medico;
+import proyecto.modelo.Excepciones.NoExistePacienteException;
 import proyecto.modelo.Factory.IMedicoFactoryConPosgrado;
+import proyecto.modelo.Factura.Factura;
+import proyecto.modelo.Habitacion.Habitacion;
+import proyecto.modelo.Habitacion.HabitacionCompartida;
 import proyecto.modelo.interfaces.IMedico;
 import proyecto.modelo.paciente.Nino;
 import proyecto.modelo.paciente.Paciente;
@@ -25,6 +30,8 @@ public class App
         Paciente p2 = new Nino("1234567", "Julian", "Ganduglia", "Mardel","123456789", d,51000);
         Paciente p3 = new Nino("4441234", "Leonel", "Ganduglia", "Mardel","123456789", d,52000);
 
+        Habitacion h = new HabitacionCompartida(1000000);
+
         c.registrarMedico(medico);
         c.registrarMedico(medico2);
         c.registrarPaciente(p1);
@@ -32,6 +39,26 @@ public class App
         c.registrarPaciente(p3);
         c.mostrarTodosLosMedicos();
         c.mostrarTodosLosPacientes();
+        try {
+            c.ingresarPaciente(p1);
+            c.ingresarPaciente(p2);
+            c.ingresarPaciente(p3);
+            c.atiendePaciente(medico, p1);
+            c.atiendePaciente(medico2, p3);
+            c.atiendePaciente(medico2, p2);
+            c.internarPaciente(p2, h);
+            c.atiendePaciente(medico2, p1);
+        } catch (NoExistePacienteException e) {
+            e.printStackTrace();
+        }
+
+        Factura factura1 = c.egresaPaciente(p1);
+        Factura factura2 = c.egresaPaciente(p3);
+        Factura factura3 = c.egresaPaciente(p2, new Date(125, 9, 15));
+        System.out.println(factura1);
+        System.out.println(factura2);
+        System.out.println(factura3);
+        c.calcularHonorariosMedico(medico2, new Date(60, 9, 15), new Date(200, 9, 15));
 
     }
 }

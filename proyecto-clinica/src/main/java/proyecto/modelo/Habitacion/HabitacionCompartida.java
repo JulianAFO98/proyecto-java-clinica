@@ -11,6 +11,10 @@ public class HabitacionCompartida extends Habitacion{
 		return cantDias*super.getPrecioBase();
 	}
 
+	public  String getTipoHabitacion(){
+		return "Compartida";
+	}
+
 	@Override
 	public String toString() {
 		return "HabitacionCompartida " + super.toString();
