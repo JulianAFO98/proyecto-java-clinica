@@ -30,7 +30,7 @@ public class App
         Paciente p2 = new Nino("1234567", "Julian", "Ganduglia", "Mardel","123456789", d,51000);
         Paciente p3 = new Nino("4441234", "Leonel", "Ganduglia", "Mardel","123456789", d,52000);
 
-        Habitacion h = new HabitacionCompartida(1000000);
+        Habitacion h = new HabitacionCompartida(10000);
 
         c.registrarMedico(medico);
         c.registrarMedico(medico2);
@@ -54,7 +54,7 @@ public class App
 
         Factura factura1 = c.egresaPaciente(p1);
         Factura factura2 = c.egresaPaciente(p3);
-        Factura factura3 = c.egresaPaciente(p2, new Date(125, 9, 15));
+        Factura factura3 = c.egresaPaciente(p2, new Date(125, 10, 15));
         System.out.println(factura1);
         System.out.println(factura2);
         System.out.println(factura3);

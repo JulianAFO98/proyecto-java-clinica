@@ -142,8 +142,8 @@ public class Factura {
             factura.append("Nombre: ").append(c.getPaciente().getNombre()).append("   ");
             factura.append("Médico: ").append(c.getMedico().getNombre()).append("\n");
             factura.append("Especialidad: ").append(c.getMedico().getEspecialidad()).append("\n");
-            suma += c.getMedico().calcularSueldo();
-            factura.append("Subtotal: $ ").append(c.getMedico().calcularSueldo()).append("\n\n");
+            suma += c.getMedico().calcularSueldo()*1.2;
+            factura.append("Subtotal: $ ").append(c.getMedico().calcularSueldo()*1.2).append("\n\n");
         }
     }
     factura.append("Total: ").append(String.format("%.2f", suma)).append("\n");

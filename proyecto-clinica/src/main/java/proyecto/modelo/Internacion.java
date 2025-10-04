@@ -1,5 +1,6 @@
 package proyecto.modelo;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +26,12 @@ public class Internacion {
 		setCantidadDiasInternacion(dias);
 	}
 	
+	public Date obtenerFechaConDiasSumados(int dias) {
+    	Calendar calendar = Calendar.getInstance();
+    	calendar.setTime(this.fechaInternacion);
+    	calendar.add(Calendar.DAY_OF_MONTH, dias);
+    	return calendar.getTime();
+	}
 
 	private void setCantidadDiasInternacion(int cantidadDiasInternacion) {
 		this.cantidadDiasInternacion = cantidadDiasInternacion;

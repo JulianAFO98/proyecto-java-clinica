@@ -152,15 +152,13 @@ public class Clinica {
             }
         }
         for (Internacion i : internaciones) {
-            if(i.getPaciente() == p)
-                internacion=i;
+            if(i.getPaciente() == p){
+                internacion = i;
+            }
+            
         }
-
-        System.out.println(internacion.getPaciente().getNombre());
-
-
-
-        return new Factura(fechaActual, consultasDelPaciente, internacion, fechaActual, p);
+        internacion.darDeAlta(fecha);
+        return new Factura(fechaActual, consultasDelPaciente, internacion, internacion.obtenerFechaConDiasSumados(internacion.getCantidadDiasInternacion()), p);
     }
 
     public String getNombreClinica() {
