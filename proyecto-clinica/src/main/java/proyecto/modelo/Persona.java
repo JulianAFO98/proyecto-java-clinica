@@ -1,6 +1,11 @@
 package proyecto.modelo;
 import proyecto.modelo.interfaces.IPersona;
 
+/**
+ * Clase abstracta que define los atributos correspondientes a una persona 
+ * 
+ */
+
 public abstract class Persona implements IPersona{
     private String dni;
     private String nombre;
