@@ -8,6 +8,11 @@ import proyecto.modelo.Habitacion.Habitacion;
 import proyecto.modelo.interfaces.IMedico;
 import proyecto.modelo.paciente.Paciente;
 
+/**
+ * Clase que representa una clinica,aplicadora del patron facade.
+ * Se pueden registrar pacientes, medicos, internaciones y consultas.
+ * Tambien se puede egresar pacientes y calcular honorarios de medicos.
+ */
 public class Clinica {
     private String nombreClinica;
     private String telefono;
@@ -21,19 +26,39 @@ public class Clinica {
     private ArrayList<IMedico> medicos = new ArrayList<IMedico>();
     private ArrayList<Internacion> internaciones = new ArrayList<Internacion>();
 
+    
+     /**
+     * Constructor de la clinica
+     * @param nombreClinica nombre de la clinica
+     * @param telefono telefono de la clinica
+     * @param direccion direccion de la clinica
+     * Precondiciones: los parametros no deben ser null
+     * Postcondiciones: se crea la clinica con listas vacias y sala de espera vacia
+     */
     public Clinica(String nombreClinica, String telefono, String direccion) {
         this.nombreClinica = nombreClinica;
         this.telefono = telefono;
         this.direccion = direccion;
     }
 
-    // Agregarlo a la base de datos
+    /**
+     * Registra un paciente la clininca
+     * @param p paciente a registrar
+     * Precondiciones: p no debe ser null
+     * Postcondiciones: el paciente queda agregado a pacientesRegistrados
+     */
     public void registrarPaciente(Paciente p) {
         pacientesRegistrados.add(p);
     }
 
+     /**
+     * Ingresa un paciente a la clinica
+     * @param p paciente a ingresar
+     * @throws NoExistePacienteException si el paciente no esta registrado
+     * Precondiciones: p no debe ser null
+     * Postcondiciones: el paciente queda en sala de espera o en el patio
+     */
     public void ingresarPaciente(Paciente p) throws NoExistePacienteException {
-        // Verificar si el paciente existe en nuestra "db"
         boolean existePaciente = pacientesRegistrados.contains(p);
 
         // si no existe tiramos excepcion
@@ -56,7 +81,16 @@ public class Clinica {
             }
         }
     }
-
+    /**
+     * Atiende un paciente con un medico
+     * @param m medico que atiende
+     * @param p paciente a atender
+     * @throws NoExistePacienteException si el paciente no esta en sala ni patio ni en atencion
+     * Precondiciones: 
+     * m y p no deben ser null
+     * Postcondiciones: 
+     * se agrega una consulta medica del paciente con el medico con fechas en null
+     */
     public void atiendePaciente(IMedico m, Paciente p) throws NoExistePacienteException {
         // buscamos el menor numero de entre la salaPrivada o el patio
         Paciente pacienteBuscado = null;
@@ -81,32 +115,63 @@ public class Clinica {
         consultaMedicas.add(new ConsultaMedica(pacienteBuscado, m, null));
 
     }
-
+     /**
+     * Registra un medico en la clinica
+     * @param m medico a registrar
+     * Precondiciones: m no debe ser null
+     * Postcondiciones: el medico queda agregado a la lista de medicos
+     */
     public void registrarMedico(IMedico m) {
         medicos.add(m);
     }
-
+    /**
+     * Interna un paciente en una habitacion
+     * @param p paciente a internar
+     * @param h habitacion donde internar
+     * Precondiciones: p y h no deben ser null
+     * Postcondiciones: se agrega una internacion a la lista de internaciones
+     */
     public void internarPaciente(Paciente p, Habitacion h) {
         internaciones.add(new Internacion(p, h, new Date())); // preguntar
     }
-
+    /**
+     * Muestra todos los medicos por consola
+     * Precondiciones: ninguna
+     * Postcondiciones: imprime los medicos registrados
+     */
     public void mostrarTodosLosMedicos() {
         for (IMedico m : medicos) {
             System.out.println(m.toString());
         }
     }
+    /**
+     * Muestra todas las internaciones
+     * Precondiciones: ninguna
+     * Postcondiciones: imprime las internaciones registradas
+     */
     public void mostrarInternaciones() {
         for (Internacion i : internaciones) {
             System.out.println(i.toString());
         }
     }
-
+    /**
+     * Muestra todos los pacientes registrados
+     * Precondiciones: ninguna
+     * Postcondiciones: imprime los pacientes registrados
+     */
     public void mostrarTodosLosPacientes() {
         for (Paciente p : pacientesRegistrados) {
             System.out.println(p.toString());
         }
     }
-
+    /**
+     * Calcula los honorarios de un medico entre dos fechas
+     * @param m medico
+     * @param inicio fecha inicio
+     * @param fin fecha fin
+     * Precondiciones: m, inicio y fin no deben ser null
+     * Postcondiciones: imprime los honorarios del medico entre esas fechas
+     */
    public void calcularHonorariosMedico(IMedico m, Date inicio, Date fin) {
 
         double honorarios = 0;
@@ -125,7 +190,13 @@ public class Clinica {
 
         System.out.println("Honorarios:"+honorarios);
     }
-
+    /**
+     * Egreso un paciente sin internacion
+     * @param p paciente a egresar
+     * @return factura del paciente
+     * Precondiciones: p no debe ser null
+     * Postcondiciones: se crea una factura con las consultas del paciente
+     */
     public Factura egresaPaciente(Paciente p) {
         ArrayList<ConsultaMedica> consultasDelPaciente = new ArrayList<ConsultaMedica>();
         Date fechaActual = new Date();
@@ -139,7 +210,14 @@ public class Clinica {
         return new Factura(fechaActual, consultasDelPaciente, null, fechaActual, p);
 
     }
-
+     /**
+     * Egreso un paciente con internacion
+     * @param p paciente a egresar
+     * @param fecha fecha de egreso
+     * @return factura del paciente
+     * Precondiciones: p y fecha no deben ser null
+     * Postcondiciones: se crea una factura con internacion y consultas actualizadas
+     */
     public Factura egresaPaciente(Paciente p, Date fecha){
         ArrayList<ConsultaMedica> consultasDelPaciente = new ArrayList<ConsultaMedica>();
         Internacion internacion = null;
@@ -160,19 +238,19 @@ public class Clinica {
         internacion.darDeAlta(fecha);
         return new Factura(fechaActual, consultasDelPaciente, internacion, internacion.obtenerFechaConDiasSumados(internacion.getCantidadDiasInternacion()), p);
     }
-
+    /** @return devuelve el nombre de la clinica */
     public String getNombreClinica() {
         return nombreClinica;
     }
-
+    /** @return devuelve telefono de la clinica */
     public String getTelefono() {
         return telefono;
     }
-
+    /** @param telefono Reasigna el telefono de la clinica */
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
+    /** @return devuelve la direccion de la clinica */
     public String getDireccion() {
         return direccion;
     }
