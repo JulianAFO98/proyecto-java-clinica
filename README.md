@@ -6,4 +6,4 @@ Integrantes:
 -Stufano Nazareno
 -Fernandez Ordoqui Julian Agustin
 -Teruel Lopez Leonel
-![UML Proyecto clinica](./assets/umfFinal.svg)
+![UML Proyecto clinica](./assets/umlImagen.jpg)
