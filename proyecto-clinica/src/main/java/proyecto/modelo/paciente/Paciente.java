@@ -14,23 +14,62 @@ public abstract class Paciente extends Persona implements IPaciente{
 		this.numeroHistoriaClinica = numeroHistoriaClinica;
 		this.numeroOrdenPropio=-1;
 	}
-
+	/**
+	 * Devuelve el numero de historia clinica asociado al paciente.
+	 *
+	 * @return el número de historia clinica del paciente.
+	 *
+	 * @pre el atributo numeroHistoriaClinica debe haber sido asignado previamente.
+	 * @post no se modifica el estado interno del objeto.
+	 */
 	public int getNumeroHistoriaClinica() {
-		return numeroHistoriaClinica;
+	    return numeroHistoriaClinica;
 	}
 
+	/**
+	 * Asigna al paciente un número de orden propio incremental.
+	 * 
+	 * <p>El número se obtiene incrementando en uno el contador estático
+	 * contadorNumeroOrden y almacenando el resultado en el atributo
+	 * numeroOrdenPropio del paciente actual.</p>
+	 *
+	 * @pre  contadorNumeroOrden debe estar correctamente inicializado.
+	 * @post  numeroOrdenPropio del paciente se incrementa en 1 con respecto
+	 *       al último valor asignado globalmente.
+	 * @post  contadorNumeroOrden se incrementa en 1.
+	 */
 	public void setNumeroOrdenPropio() {
-		this.numeroOrdenPropio = ++contadorNumeroOrden;
+	    this.numeroOrdenPropio = ++contadorNumeroOrden;
 	}
 
+	/**
+	 * Devuelve el número de orden propio asignado al paciente.
+	 *
+	 * @return el número de orden propio de este paciente.
+	 *
+	 * @pre  numeroOrdenPropio debe haber sido asignado previamente
+	 *      mediante  setNumeroOrdenPropio().
+	 * @post no se modifica el estado interno del objeto.
+	 */
 	public int getNumeroOrdenPropio() {
-		return this.numeroOrdenPropio;
+	    return this.numeroOrdenPropio;
 	}
 
+	/**
+	 * Devuelve una representación en formato texto del paciente,
+	 * mostrando sus datos principales.
+	 *
+	 * @return una cadena con el formato:
+	 *         "Paciente [dni, Nombre: nombre, Apellido: apellido, Telefono: telefono]"
+	 *
+	 * @pre los atributos  dni, code nombre, code apellido y code telefono
+	 *      deben estar correctamente inicializados.
+	 * @post no se modifica el estado interno del objeto.
+	 */
 	@Override
 	public String toString() {
-		return "Paciente [" + getDni() + ", Nombre: " + getNombre() + ", Apellido: " + getApellido()
-				+ ", Telefono: " + getTelefono() + "]";
+	    return "Paciente [" + getDni() + ", Nombre: " + getNombre() + ", Apellido: " + getApellido()
+	            + ", Telefono: " + getTelefono() + "]";
 	}
 
 	
