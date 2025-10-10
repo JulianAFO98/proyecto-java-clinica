@@ -149,14 +149,6 @@ public class Factura {
         return costoHabitacion;
     }
 
-    /**
-     * Devuelve la lista de consultas médicas como Strings.
-     * Pre: ninguna.
-     * Post: retorna una copia de la lista de consultas.
-     */
-    public ArrayList<String> getConsultas() {
-        return new ArrayList<>(consultas);
-    }
 
     /**
      * Devuelve el total de la factura.
