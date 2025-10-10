@@ -15,16 +15,16 @@ import proyecto.modelo.paciente.Paciente;
  */
 public class Factura {
     private static int contadorOrdenFactura = 0;
-    private final int ordenFactura;
-    private final String nombrePaciente;
-    private final String apellidoPaciente;
-    private final String fechaIngreso;
-    private final String fechaEgreso;
-    private final Integer cantidadDiasInternacion;
-    private final String tipoHabitacion;
-    private final Double costoHabitacion;
-    private final ArrayList<String> consultas;
-    private final Double total;
+    private int ordenFactura;
+    private String nombrePaciente;
+    private String apellidoPaciente;
+    private String fechaIngreso;
+    private String fechaEgreso;
+    private Integer cantidadDiasInternacion;
+    private String tipoHabitacion;
+    private Double costoHabitacion;
+    private ArrayList<String> consultas;
+    private Double total;
 
     /**
      * Constructor de la clase Factura.
@@ -33,6 +33,7 @@ public class Factura {
      */
     public Factura(Date fechaIngreso, ArrayList<ConsultaMedica> consultasMedicas, Internacion internacion,
             Date fechaEgreso, Paciente paciente) {
+
         this.ordenFactura = ++contadorOrdenFactura;
         this.nombrePaciente = paciente.getNombre();
         this.apellidoPaciente = paciente.getApellido();
@@ -42,23 +43,24 @@ public class Factura {
             this.cantidadDiasInternacion = internacion.getCantidadDiasInternacion();
             this.tipoHabitacion = internacion.getH().getTipoHabitacion();
             this.costoHabitacion = internacion.getH().calcularPrecio(internacion.getCantidadDiasInternacion());
+            this.total = this.costoHabitacion;
         } else {
+            this.total = 0.0;
             this.cantidadDiasInternacion = null;
             this.tipoHabitacion = null;
             this.costoHabitacion = null;
         }
         this.consultas = new ArrayList<>();
-        double suma = (costoHabitacion != null) ? costoHabitacion : 0;
+
         if (consultasMedicas != null) {
             for (ConsultaMedica c : consultasMedicas) {
                 String consultaStr = "Médico: " + c.getMedico().getNombre() + " " + c.getMedico().getApellido() + "\n" +
                         "Especialidad: " + c.getMedico().getEspecialidad() + "\n" +
                         "Subtotal: $ " + String.format("%.2f", c.getMedico().calcularSueldo() * 1.2) + "\n";
                 this.consultas.add(consultaStr);
-                suma += c.getMedico().calcularSueldo() * 1.2;
+                this.total += c.getMedico().calcularSueldo() * 1.2;
             }
         }
-        this.total = suma;
     }
 
     /**
