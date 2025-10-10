@@ -3,8 +3,16 @@ package proyecto.modelo.Decorator;
 import proyecto.modelo.Domicilio;
 import proyecto.modelo.interfaces.IMedico;
 
+/**
+ * Clase abstracta que representa un decorador para agregar posgrados a un medico.
+ * Hereda de DecoratorMedico.
+ *
+ */
 public abstract class DecoratorPosgrado extends DecoratorMedico{
-
+	/**
+	 * Constructor que recibe un medico a decorar.
+	 * @param medico El medico a decorar.
+	 */
 	public DecoratorPosgrado(IMedico medico) {
 		super(medico);
 	}
