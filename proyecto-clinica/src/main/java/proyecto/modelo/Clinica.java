@@ -1,5 +1,6 @@
 package proyecto.modelo;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import proyecto.modelo.Excepciones.NoExistePacienteException;
@@ -134,61 +135,46 @@ public class Clinica {
     public void internarPaciente(Paciente p, Habitacion h) {
         internaciones.add(new Internacion(p, h, new Date())); // preguntar
     }
+    
+    
+   
     /**
-     * Muestra todos los medicos por consola
-     * Precondiciones: ninguna
-     * Postcondiciones: imprime los medicos registrados
+     * Calcula los honorarios de un medico entre dos fechas a partir de sus consultas
+     * @param m medico
+     * @param inicio fecha inicio
+     * @param fin fecha fin
+     * Precondiciones: la lista de consultas no debe ser null
+     * Postcondiciones: retorna los honorarios del medico sumando el sueldo por cada consulta
      */
-    public void mostrarTodosLosMedicos() {
-        for (IMedico m : medicos) {
-            System.out.println(m.toString());
+    public double calcularHonorariosMedico(ArrayList<ConsultaMedica> consultasDelMedico) {
+        double honorarios = 0;
+        for (ConsultaMedica consulta : consultasDelMedico) {
+            honorarios += consulta.getMedico().calcularSueldo();
         }
+        return honorarios;  
     }
-    /**
-     * Muestra todas las internaciones
-     * Precondiciones: ninguna
-     * Postcondiciones: imprime las internaciones registradas
-     */
-    public void mostrarInternaciones() {
-        for (Internacion i : internaciones) {
-            System.out.println(i.toString());
-        }
-    }
-    /**
-     * Muestra todos los pacientes registrados
-     * Precondiciones: ninguna
-     * Postcondiciones: imprime los pacientes registrados
-     */
-    public void mostrarTodosLosPacientes() {
-        for (Paciente p : pacientesRegistrados) {
-            System.out.println(p.toString());
-        }
-    }
-    /**
-     * Calcula los honorarios de un medico entre dos fechas
+     /**
+     * Obtiene las consultas de un medico entre dos fechas
      * @param m medico
      * @param inicio fecha inicio
      * @param fin fecha fin
      * Precondiciones: m, inicio y fin no deben ser null
-     * Postcondiciones: imprime los honorarios del medico entre esas fechas
+     * Postcondiciones: retorna  las consultas del medico entre esas fechas o un array vacio
      */
-   public void calcularHonorariosMedico(IMedico m, Date inicio, Date fin) {
-
-        double honorarios = 0;
-        double sueldo = m.calcularSueldo();
-        System.out.println("Honorarios del medico:"+m.getNombre()+" "+m.getApellido());
+    public ArrayList<ConsultaMedica> obtenerConsultasDeUnMedicoPorFecha(IMedico m, Date inicio, Date fin) {
+        ArrayList<ConsultaMedica> consultasDelMedico = new ArrayList<ConsultaMedica>();
+        
         for (ConsultaMedica consulta : consultaMedicas) {
             if (consulta.getMedico().equals(m)) {
                 double fechaInicio = consulta.getFechaConsulta().compareTo(inicio);
                 double fechaFin = consulta.getFechaConsulta().compareTo(fin);
                 if (fechaInicio >= 0 && fechaFin <= 0) {
-                    System.out.println(consulta.getPaciente());
-                    honorarios += sueldo;
+                    consultasDelMedico.add(consulta);
                 }
             }
         }
 
-        System.out.println("Honorarios:"+honorarios);
+        return consultasDelMedico;
     }
     /**
      * Egreso un paciente sin internacion

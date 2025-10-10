@@ -14,205 +14,182 @@ import proyecto.modelo.paciente.Paciente;
  * consultas médicas realizadas, posibles internaciones y paciente asociado.
  */
 public class Factura {
-    /** Contador estático que lleva la cuenta de las facturas generadas. */
     private static int contadorOrdenFactura = 0;
-    /** Número de orden único de la factura. */
-    private int ordenFactura;
-    private Date fechaIngreso;
-     /** Lista de consultas médicas asociadas a esta factura. */
-    private ArrayList<ConsultaMedica> consultas;
-    /** Internacion del paciente, si corresponde */
-    private Internacion internacion;
-     /** Fecha de egreso del paciente. */
-    private Date fechaEgreso;
-    /** Paciente asociado a la factura. */
-    private Paciente paciente;
+    private final int ordenFactura;
+    private final String nombrePaciente;
+    private final String apellidoPaciente;
+    private final String fechaIngreso;
+    private final String fechaEgreso;
+    private final Integer cantidadDiasInternacion;
+    private final String tipoHabitacion;
+    private final Double costoHabitacion;
+    private final ArrayList<String> consultas;
+    private final Double total;
 
-     /**
+    /**
      * Constructor de la clase Factura.
-     * Asigna un numero  de orden unico incrementando el contador.
-     * 
-     * Precondiciones:
-     * fechaIngreso no null
-     * consultas no null
-     * fechaEgreso no null
-     * paciente no null
-     * Poscondiciones:
-     * Creacion de la factura con orden unico
-     * 
-     * @param fechaIngreso Fecha de ingreso del paciente.
-     * @param consultas Lista de consultas medicas asociadas a un paciente.
-     * @param internacion Internacion de un paciente, null en caso de que no haya sido internado.
-     * @param fechaEgreso Fecha de egreso del paciente.
-     * @param paciente Paciente asociado a la factura.
+     * Pre: Los parámetros no deben ser nulos (excepto internacion si no hubo)
+     * Post: Se crea una factura con los datos historicos e inmutables
      */
-    public Factura( Date fechaIngreso, ArrayList<ConsultaMedica> consultas,Internacion internacion, Date fechaEgreso, Paciente paciente) {
-        this.fechaIngreso = fechaIngreso;
-        this.consultas = consultas;
-        this.internacion = internacion;
-        this.fechaEgreso = fechaEgreso;
-        this.paciente = paciente;
-        this.ordenFactura=++contadorOrdenFactura;
+    public Factura(Date fechaIngreso, ArrayList<ConsultaMedica> consultasMedicas, Internacion internacion,
+            Date fechaEgreso, Paciente paciente) {
+        this.ordenFactura = ++contadorOrdenFactura;
+        this.nombrePaciente = paciente.getNombre();
+        this.apellidoPaciente = paciente.getApellido();
+        this.fechaIngreso = formatearFecha(fechaIngreso);
+        this.fechaEgreso = formatearFecha(fechaEgreso);
+        if (internacion != null) {
+            this.cantidadDiasInternacion = internacion.getCantidadDiasInternacion();
+            this.tipoHabitacion = internacion.getH().getTipoHabitacion();
+            this.costoHabitacion = internacion.getH().calcularPrecio(internacion.getCantidadDiasInternacion());
+        } else {
+            this.cantidadDiasInternacion = null;
+            this.tipoHabitacion = null;
+            this.costoHabitacion = null;
+        }
+        this.consultas = new ArrayList<>();
+        double suma = (costoHabitacion != null) ? costoHabitacion : 0;
+        if (consultasMedicas != null) {
+            for (ConsultaMedica c : consultasMedicas) {
+                String consultaStr = "Médico: " + c.getMedico().getNombre() + " " + c.getMedico().getApellido() + "\n" +
+                        "Especialidad: " + c.getMedico().getEspecialidad() + "\n" +
+                        "Subtotal: $ " + String.format("%.2f", c.getMedico().calcularSueldo() * 1.2) + "\n";
+                this.consultas.add(consultaStr);
+                suma += c.getMedico().calcularSueldo() * 1.2;
+            }
+        }
+        this.total = suma;
     }
 
+    /**
+     * Formatea una fecha a String yyyy/MM/dd.
+     * Pre: fecha no nula.
+     * Post: Devuelve la fecha en formato String.
+     */
+    private String formatearFecha(Date fecha) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        int anio = cal.get(Calendar.YEAR);
+        int mes = cal.get(Calendar.MONTH) + 1;
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
+        return String.format("%04d/%02d/%02d", anio, mes, dia);
+    }
 
-   
-
-    /** 
-     * Precondiciones:
-     * Ninguna
-     * Poscondiciones:
-     * devuelve el valor de orden correcto de la factura
-     * @return Numero de orden de la factura. 
-    */
+    /**
+     * Devuelve el número de orden de la factura.
+     * Pre: ninguna.
+     * Post: retorna el número único de la factura.
+     */
     public int getOrdenFactura() {
         return ordenFactura;
     }
-    /** 
-     * Precondiciones:
-     * Ninguna
-     * Poscondiciones:
-     * devuelve la fecha de ingreso correcta del paciente de la factura
-     * @return Fecha de ingreso del paciente. 
-    */
-    public Date getFechaIngreso() {
+
+    /**
+     * Devuelve el nombre del paciente.
+     * Pre: ninguna.
+     * Post: retorna el nombre guardado en la factura.
+     */
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
+
+    /**
+     * Devuelve el apellido del paciente.
+     * Pre: ninguna.
+     * Post: retorna el apellido guardado en la factura.
+     */
+    public String getApellidoPaciente() {
+        return apellidoPaciente;
+    }
+
+    /**
+     * Devuelve la fecha de ingreso.
+     * Pre: ninguna.
+     * Post: retorna la fecha de ingreso como String.
+     */
+    public String getFechaIngreso() {
         return fechaIngreso;
     }
 
-    /** 
-     * Precondiciones:
-     * Ninguna
-     * Poscondiciones:
-     * Se asigna la fecha de ingreso correctamente
-     * @param fechaIngreso Asigna la fecha de ingreso del paciente.
-     */
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-     /** 
-     * Precondiciones:
-     * Ninguna
-     * Poscondiciones:
-     * Se obtiene la lista de consultas
-     *  @return Lista de consultas medicas asociadas a la factura.
-     */
-    public ArrayList<ConsultaMedica> getConsultas() {
-        return consultas;
-    }
-     /** 
-     * Precondiciones:
-     * Ninguna
-     * Poscondiciones:
-     * Se asigna la lista de consultas correctamente
-     * @param consultas Asigna la lista de consultas medicas. 
-     */
-    public void setConsultas(ArrayList<ConsultaMedica> consultas) {
-        this.consultas = consultas;
-    }
-    
     /**
-     * Precondiciones:
-     * Ninguna
-     * Poscondiciones:
-     * Se obtiene la internacion correctamente
-     *  @return Internacion del paciente asociada a la factura.
-     * 
+     * Devuelve la fecha de egreso.
+     * Pre: ninguna.
+     * Post: retorna la fecha de egreso como String.
      */
-    public Internacion getInternacion() {
-        return internacion;
-    }
-
-    /** 
-     * 
-     * Precondiciones:
-     * Ninguna
-     * Poscondiciones:
-     * Se asigna la internacion correctamente
-     * @param internacion Asigna la internacion del paciente. 
-     * 
-    */
-    public void setInternacion(Internacion internacion) {
-        this.internacion = internacion;
-    }
-     /** 
-      * Precondiciones:
-      * Ninguna
-      * Poscondiciones:
-      * Se obtiene la fecha de egreso del paciente correctamente
-      * @return Fecha de egreso del paciente.
-      * 
-      */
-    public Date getFechaEgreso() {
+    public String getFechaEgreso() {
         return fechaEgreso;
     }
-    /** 
-     * Precondiciones:
-     * Ninguna
-     * Poscondiciones:
-     * Se obtiene  paciente correctamente
-     * @return Paciente asociado a la factura.
+
+    /**
+     * Devuelve la cantidad de días de internación.
+     * Pre: ninguna.
+     * Post: retorna la cantidad de días o null si no hubo internación.
      */
-    public Paciente getPaciente() {
-        return paciente;
+    public Integer getCantidadDiasInternacion() {
+        return cantidadDiasInternacion;
     }
 
     /**
-     * Genera un String de la factura con la informacion relevante:
-     * numero de factura, datos del paciente, fechas, internacion y consultas.
-     * 
-     * Precondiciones:
-     * Ninguna
-     * Poscondiciones:
-     * Se retorna el string representativo de la factura correctamente
-     * 
-     * @return String con la informacion completa de la factura.
+     * Devuelve el tipo de habitación.
+     * Pre: ninguna.
+     * Post: retorna el tipo de habitación o null si no hubo internación.
+     */
+    public String getTipoHabitacion() {
+        return tipoHabitacion;
+    }
+
+    /**
+     * Devuelve el costo de la habitación.
+     * Pre: ninguna.
+     * Post: retorna el costo o null si no hubo internación.
+     */
+    public Double getCostoHabitacion() {
+        return costoHabitacion;
+    }
+
+    /**
+     * Devuelve la lista de consultas médicas como Strings.
+     * Pre: ninguna.
+     * Post: retorna una copia de la lista de consultas.
+     */
+    public ArrayList<String> getConsultas() {
+        return new ArrayList<>(consultas);
+    }
+
+    /**
+     * Devuelve el total de la factura.
+     * Pre: ninguna.
+     * Post: retorna el total calculado.
+     */
+    public Double getTotal() {
+        return total;
+    }
+
+    /**
+     * Devuelve la factura como String con toda la información.
+     * Pre: ninguna.
+     * Post: retorna el resumen de la factura.
      */
     @Override
     public String toString() {
-    StringBuilder factura = new StringBuilder();
-    Calendar cal = Calendar.getInstance();
-
-    cal.setTime(this.getFechaIngreso());
-    int anio = cal.get(Calendar.YEAR);
-    int mes = cal.get(Calendar.MONTH) + 1;
-    int dia = cal.get(Calendar.DAY_OF_MONTH);
-    String fechaIngreso = String.format("%04d/%02d/%02d", anio, mes, dia); 
-    cal.setTime(this.getFechaEgreso());
-    anio = cal.get(Calendar.YEAR);
-    mes = cal.get(Calendar.MONTH) + 1; 
-    dia = cal.get(Calendar.DAY_OF_MONTH);
-    String fechaEgreso = String.format("%04d/%02d/%02d", anio, mes, dia);   
-
-    factura.append("N° Factura: ").append(this.ordenFactura).append("\n");
-    factura.append("Nombre Paciente: ").append(this.paciente.getNombre()+" "+this.paciente.getApellido()).append("\n");
-    factura.append("Fecha Ingreso: ").append(fechaIngreso).append("\n");
-    factura.append("Fecha Egreso: ").append(fechaEgreso).append("\n");
-
-    // Si hay internación
-    if (internacion != null) {
-        factura.append("Cantidad de días: ")
-          .append(internacion.getCantidadDiasInternacion())
-          .append("\n");
-        factura.append("Habitación tipo: ")
-          .append(internacion.getH().getTipoHabitacion())
-          .append("   Costo: $ ")
-          .append(internacion.getH().calcularPrecio(internacion.getCantidadDiasInternacion()))
-          .append("\n");
-    }
-
-    factura.append("\nConsultas Médicas:\n");
-    double suma = 0;
-
-    if (consultas != null && !consultas.isEmpty()) {
-        for (ConsultaMedica c : consultas) {
-            factura.append("Médico: ").append(c.getMedico().getNombre()+" "+c.getMedico().getApellido()).append("\n");
-            factura.append("Especialidad: ").append(c.getMedico().getEspecialidad()).append("\n");
-            suma += c.getMedico().calcularSueldo()*1.2;
-            factura.append("Subtotal: $ ").append(c.getMedico().calcularSueldo()*1.2).append("\n\n");
+        StringBuilder factura = new StringBuilder();
+        factura.append("N° Factura: ").append(this.ordenFactura).append("\n");
+        factura.append("Nombre Paciente: ").append(this.nombrePaciente + " " + this.apellidoPaciente).append("\n");
+        factura.append("Fecha Ingreso: ").append(this.fechaIngreso).append("\n");
+        factura.append("Fecha Egreso: ").append(this.fechaEgreso).append("\n");
+        if (cantidadDiasInternacion != null) {
+            factura.append("Cantidad de días: ").append(cantidadDiasInternacion).append("\n");
+            factura.append("Habitación tipo: ").append(tipoHabitacion).append("   Costo: $ ").append(costoHabitacion)
+                    .append("\n");
         }
+        factura.append("\nConsultas Médicas:\n");
+        if (consultas != null && !consultas.isEmpty()) {
+            for (String consulta : consultas) {
+                factura.append(consulta).append("\n");
+            }
+        }
+        factura.append("Total: ").append(String.format("%.2f", total)).append("\n");
+        return factura.toString();
     }
-    factura.append("Total: ").append(String.format("%.2f", suma)).append("\n");
-    return factura.toString();
-}
 
 }

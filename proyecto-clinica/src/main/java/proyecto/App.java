@@ -1,7 +1,10 @@
 package proyecto;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import proyecto.modelo.Clinica;
+import proyecto.modelo.ConsultaMedica;
 import proyecto.modelo.Domicilio;
 import proyecto.modelo.Medico;
 import proyecto.modelo.Excepciones.NoExistePacienteException;
@@ -37,8 +40,6 @@ public class App
         c.registrarPaciente(p1);
         c.registrarPaciente(p2);
         c.registrarPaciente(p3);
-        c.mostrarTodosLosMedicos();
-        c.mostrarTodosLosPacientes();
         try {
             c.ingresarPaciente(p1);
             c.ingresarPaciente(p2);
@@ -58,7 +59,13 @@ public class App
         System.out.println(factura1);
         System.out.println(factura2);
         System.out.println(factura3);
-        c.calcularHonorariosMedico(medico2, new Date(60, 9, 15), new Date(200, 9, 15));
+
+        System.out.println("Consultas del medico"+ medico2.getNombre()+" "+medico2.getApellido());
+        ArrayList<ConsultaMedica> consultasDelMedico = c.obtenerConsultasDeUnMedicoPorFecha(medico2, new Date(120, 0, 1), new Date(125, 11, 31));
+        for (ConsultaMedica consulta : consultasDelMedico) {
+            System.out.println(consulta);
+        }
+        System.out.println("Honorarios del medico: " + c.calcularHonorariosMedico(consultasDelMedico));
 
     }
 }
