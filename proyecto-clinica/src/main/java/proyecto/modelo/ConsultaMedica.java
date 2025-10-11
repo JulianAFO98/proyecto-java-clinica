@@ -1,4 +1,5 @@
 package proyecto.modelo;
+
 import java.util.Date;
 
 import proyecto.modelo.interfaces.IMedico;
@@ -12,9 +13,10 @@ public class ConsultaMedica {
     private Paciente paciente;
     private IMedico medico;
     private Date fechaConsulta;
-    
+
     /**
      * Constructor de la clase ConsultaMedica.
+     * 
      * @param paciente
      * @param medico
      * @param fechaConsulta
@@ -24,34 +26,41 @@ public class ConsultaMedica {
         this.medico = medico;
         this.fechaConsulta = fechaConsulta;
     }
+
     public Paciente getPaciente() {
         return paciente;
     }
+
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
+
     public IMedico getMedico() {
         return medico;
     }
+
     public void setMedico(IMedico medico) {
         this.medico = medico;
     }
+
     public Date getFechaConsulta() {
         return fechaConsulta;
     }
+
     public void setFechaConsulta(Date fechaConsulta) {
         this.fechaConsulta = fechaConsulta;
     }
-    
+
     /**
      * Devuelve una representación en cadena de la consulta médica.
      */
     @Override
     public String toString() {
-        return "ConsultaMedica [paciente=" + paciente + ", medico=" + medico + ", fechaConsulta=" + fechaConsulta + "]";
+        return "ConsultaMedica {\n" +
+                "  Paciente: " + (paciente != null ? paciente.toString() : "N/A") + ",\n" +
+                "  Medico: " + (medico != null ? medico.toString() : "N/A") + ",\n" +
+                "  Fecha de Consulta: " + (fechaConsulta != null ? fechaConsulta.toString() : "N/A") + "\n" +
+                "}";
     }
-
-    
-    
 
 }
