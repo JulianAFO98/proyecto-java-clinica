@@ -10,6 +10,9 @@ Integrantes:
 
 ---
 
+<a href="https://www.canva.com/design/DAG1bc5mc_M/bYvIPiBmYv0sOEgXLz_HVQ/edit?utm_content=DAG1bc5mc_M&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">Link al informe (temporal) 
+</a>
+
 **UML Proyecto Clínica**  
 (Haz clic para verla en tamaño completo 👇)
 
