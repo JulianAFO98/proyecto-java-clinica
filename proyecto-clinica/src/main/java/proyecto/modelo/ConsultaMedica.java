@@ -17,9 +17,9 @@ public class ConsultaMedica {
     /**
      * Constructor de la clase ConsultaMedica.
      * 
-     * @param paciente
-     * @param medico
-     * @param fechaConsulta
+     * @param paciente Objeto de tipo paciente que representa al paciente.
+     * @param medico Objeto de tipo IMedico que representa al médico.
+     * @param fechaConsulta Objeto de tipo Date que representa la fecha de la consulta
      */
     public ConsultaMedica(Paciente paciente, IMedico medico, Date fechaConsulta) {
         this.paciente = paciente;

@@ -1,0 +1,22 @@
+-encoding
+'windows-1252'
+-protected
+-sourcepath
+'C:/Users/julian/Desktop/proyecto-java/proyecto-java-clinica/proyecto-clinica/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/julian/Desktop/proyecto-java/proyecto-java-clinica/proyecto-clinica/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'proyecto-clinica 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/julian/Desktop/proyecto-java/proyecto-java-clinica/proyecto-clinica/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'proyecto-clinica 1.0-SNAPSHOT API'

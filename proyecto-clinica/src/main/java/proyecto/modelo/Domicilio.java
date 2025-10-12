@@ -10,8 +10,8 @@ public class Domicilio {
 	
 	/**
 	 * Constructor de la clase Domicilio.
-	 * @param calle
-	 * @param numero
+	 * @param calle calle del domicilio
+	 * @param numero número del domicilio
 	 */
 	public Domicilio(String calle, int numero)
 	{
