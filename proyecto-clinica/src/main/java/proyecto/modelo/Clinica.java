@@ -33,8 +33,8 @@ public class Clinica {
      * @param nombreClinica nombre de la clinica
      * @param telefono telefono de la clinica
      * @param direccion direccion de la clinica
-     * Pre: los parametros no deben ser null
-     * Post: se crea la clinica con listas vacias y sala de espera vacia
+     * <br>Pre: los parametros no deben ser null
+     * <br>Post: se crea la clinica con listas vacias y sala de espera vacia
      */
     public Clinica(String nombreClinica, String telefono, String direccion) {
         this.nombreClinica = nombreClinica;
@@ -45,8 +45,8 @@ public class Clinica {
     /**
      * Registra un paciente la clininca
      * @param p paciente a registrar
-     * Pre: p no debe ser null
-     * Post: el paciente queda agregado a pacientesRegistrados
+     * <br>Pre: p no debe ser null
+     * <br>Post: el paciente queda agregado a pacientesRegistrados
      */
     public void registrarPaciente(Paciente p) {
         pacientesRegistrados.add(p);
@@ -56,8 +56,8 @@ public class Clinica {
      * Ingresa un paciente a la clinica
      * @param p paciente a ingresar
      * @throws NoExistePacienteException si el paciente no esta registrado
-     * Pre: p no debe ser null
-     * Post: el paciente queda en sala de espera o en el patio
+     * <br>Pre: p no debe ser null
+     * <br>Post: el paciente queda en sala de espera o en el patio
      */
     public void ingresarPaciente(Paciente p) throws NoExistePacienteException {
         boolean existePaciente = pacientesRegistrados.contains(p);
@@ -87,9 +87,9 @@ public class Clinica {
      * @param m medico que atiende
      * @param p paciente a atender
      * @throws NoExistePacienteException si el paciente no esta en sala ni patio ni en atencion
-     * Pre: 
+     * <br>Pre: 
      * m y p no deben ser null
-     * Post: 
+     * <br>Post: 
      * se agrega una consulta medica del paciente con el medico con fechas en null
      */
     public void atiendePaciente(IMedico m, Paciente p) throws NoExistePacienteException {
@@ -119,8 +119,8 @@ public class Clinica {
      /**
      * Registra un medico en la clinica
      * @param m medico a registrar
-     * Pre: m no debe ser null
-     * Post: el medico queda agregado a la lista de medicos
+     * <br>Pre: m no debe ser null
+     * <br>Post: el medico queda agregado a la lista de medicos
      */
     public void registrarMedico(IMedico m) {
         medicos.add(m);
@@ -129,8 +129,8 @@ public class Clinica {
      * Interna un paciente en una habitacion
      * @param p paciente a internar
      * @param h habitacion donde internar
-     * Pre: p y h no deben ser null
-     * Post: se agrega una internacion a la lista de internaciones
+     * <br>Pre: p y h no deben ser null
+     * <br>Post: se agrega una internacion a la lista de internaciones
      */
     public void internarPaciente(Paciente p, Habitacion h) {
         internaciones.add(new Internacion(p, h, new Date())); // preguntar
@@ -143,8 +143,8 @@ public class Clinica {
      * @param m medico
      * @param inicio fecha inicio
      * @param fin fecha fin
-     * Pre: la lista de consultas no debe ser null
-     * Post: retorna los honorarios del medico sumando el sueldo por cada consulta
+     * <br>Pre: la lista de consultas no debe ser null
+     * <br>Post: retorna los honorarios del medico sumando el sueldo por cada consulta
      */
     public double calcularHonorariosMedico(ArrayList<ConsultaMedica> consultasDelMedico) {
         double honorarios = 0;
@@ -158,8 +158,8 @@ public class Clinica {
      * @param m medico
      * @param inicio fecha inicio
      * @param fin fecha fin
-     * Pre: m, inicio y fin no deben ser null
-     * Post: retorna  las consultas del medico entre esas fechas o un array vacio
+     * <br>Pre: m, inicio y fin no deben ser null
+     * <br>Post: retorna  las consultas del medico entre esas fechas o un array vacio
      */
     public ArrayList<ConsultaMedica> obtenerConsultasDeUnMedicoPorFecha(IMedico m, Date inicio, Date fin) {
         ArrayList<ConsultaMedica> consultasDelMedico = new ArrayList<ConsultaMedica>();
@@ -180,8 +180,8 @@ public class Clinica {
      * Egreso un paciente sin internacion
      * @param p paciente a egresar
      * @return factura del paciente
-     * Pre: p no debe ser null
-     * Post: se crea una factura con las consultas del paciente
+     * <br>Pre: p no debe ser null
+     * <br>Post: se crea una factura con las consultas del paciente
      */
     public Factura egresaPaciente(Paciente p) {
         ArrayList<ConsultaMedica> consultasDelPaciente = new ArrayList<ConsultaMedica>();
@@ -201,8 +201,8 @@ public class Clinica {
      * @param p paciente a egresar
      * @param fecha fecha de egreso
      * @return factura del paciente
-     * Pre: p y fecha no deben ser null
-     * Post: se crea una factura con internacion y consultas actualizadas
+     * <br>Pre: p y fecha no deben ser null
+     * <br>Post: se crea una factura con internacion y consultas actualizadas
      */
     public Factura egresaPaciente(Paciente p, Date fecha){
         ArrayList<ConsultaMedica> consultasDelPaciente = new ArrayList<ConsultaMedica>();

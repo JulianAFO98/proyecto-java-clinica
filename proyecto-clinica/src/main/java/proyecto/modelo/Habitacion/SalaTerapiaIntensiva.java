@@ -15,8 +15,8 @@ public class SalaTerapiaIntensiva extends Habitacion {
 	 * Crea una sala de terapia intensiva con el precio base indicado.
 	 * 
 	 * @param precioBase valor diario base de la sala.
-	 * Pre:n precioBase > 0
-	 * Post: se crea una sala de terapia intensiva con el precio base recibido.
+	 * <br>Pre:n precioBase > 0
+	 * <br>Post: se crea una sala de terapia intensiva con el precio base recibido.
 	 */
 	public SalaTerapiaIntensiva(double precioBase) {
 		super(precioBase);
@@ -27,8 +27,8 @@ public class SalaTerapiaIntensiva extends Habitacion {
 	 * 
 	 * @param cantDias cantidad de dias de uso de la sala.
 	 * @return precio total calculado como (precioBase ^ cantDias).
-	 * Pre: n paciente debe estar dado de alta y cantDias > 0
-	 * Post: retorna el monto total correspondiente a la estadia.
+	 * <br>Pre: n paciente debe estar dado de alta y cantDias > 0
+	 * <br>Post: retorna el monto total correspondiente a la estadia.
 	 */
 	@Override
 	public double calcularPrecio(int cantDias) {

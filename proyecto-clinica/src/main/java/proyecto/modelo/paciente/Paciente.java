@@ -21,8 +21,8 @@ public abstract class Paciente extends Persona implements IPaciente {
 	 *
 	 * @return el número de historia clinica del paciente.
 	 *
-	 * Pre: el atributo numeroHistoriaClinica debe haber sido asignado previamente.
-	 * Post: no se modifica el estado interno del objeto.
+	 * <br>Pre: el atributo numeroHistoriaClinica debe haber sido asignado previamente.
+	 * <br>Post: no se modifica el estado interno del objeto.
 	 */
 	public int getNumeroHistoriaClinica() {
 		return numeroHistoriaClinica;
@@ -37,10 +37,10 @@ public abstract class Paciente extends Persona implements IPaciente {
 	 * numeroOrdenPropio del paciente actual.
 	 * </p>
 	 *
-	 * Pre:  contadorNumeroOrden debe estar correctamente inicializado.
-	 * Post:  numeroOrdenPropio del paciente se incrementa en 1 con respecto
+	 * <br>Pre:  contadorNumeroOrden debe estar correctamente inicializado.
+	 * <br>Post:  numeroOrdenPropio del paciente se incrementa en 1 con respecto
 	 *       al último valor asignado globalmente.
-	 * Post:  contadorNumeroOrden se incrementa en 1.
+	 * <br>Post:  contadorNumeroOrden se incrementa en 1.
 	 */
 	public void setNumeroOrdenPropio() {
 		this.numeroOrdenPropio = ++contadorNumeroOrden;
@@ -51,9 +51,9 @@ public abstract class Paciente extends Persona implements IPaciente {
 	 *
 	 * @return el número de orden propio de este paciente.
 	 *
-	 * Pre:  numeroOrdenPropio debe haber sido asignado previamente
+	 * <br>Pre:  numeroOrdenPropio debe haber sido asignado previamente
 	 *      mediante  setNumeroOrdenPropio().
-	 * Post: no se modifica el estado interno del objeto.
+	 * <br>Post: no se modifica el estado interno del objeto.
 	 */
 	public int getNumeroOrdenPropio() {
 		return this.numeroOrdenPropio;
@@ -67,9 +67,9 @@ public abstract class Paciente extends Persona implements IPaciente {
 	 *         "Paciente [dni, Nombre: nombre, Apellido: apellido, Telefono:
 	 *         telefono]"
 	 *
-	 * Pre: los atributos  dni, code nombre, code apellido y code telefono
+	 * <br>Pre: los atributos  dni, code nombre, code apellido y code telefono
 	 *      deben estar correctamente inicializados.
-	 * Post: no se modifica el estado interno del objeto.
+	 * <br>Post: no se modifica el estado interno del objeto.
 	 */
 	@Override
 	public String toString() {

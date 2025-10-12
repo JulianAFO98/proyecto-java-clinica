@@ -28,8 +28,8 @@ public class Factura {
 
     /**
      * Constructor de la clase Factura.
-     * Pre: Los parámetros no deben ser nulos (excepto internacion si no hubo)
-     * Post: Se crea una factura con los datos historicos e inmutables
+     * <br>Pre: Los parámetros no deben ser nulos (excepto internacion si no hubo)
+     * <br>Post: Se crea una factura con los datos historicos e inmutables
      */
     public Factura(Date fechaIngreso, ArrayList<ConsultaMedica> consultasMedicas, Internacion internacion,
             Date fechaEgreso, Paciente paciente) {
@@ -65,8 +65,8 @@ public class Factura {
 
     /**
      * Formatea una fecha a String yyyy/MM/dd.
-     * Pre: fecha no nula.
-     * Post: Devuelve la fecha en formato String.
+     * <br>Pre: fecha no nula.
+     * <br>Post: Devuelve la fecha en formato String.
      */
     private String formatearFecha(Date fecha) {
         Calendar cal = Calendar.getInstance();
@@ -79,8 +79,8 @@ public class Factura {
 
     /**
      * Devuelve el número de orden de la factura.
-     * Pre: ninguna.
-     * Post: retorna el número único de la factura.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna el número único de la factura.
      */
     public int getOrdenFactura() {
         return ordenFactura;
@@ -88,8 +88,8 @@ public class Factura {
 
     /**
      * Devuelve el nombre del paciente.
-     * Pre: ninguna.
-     * Post: retorna el nombre guardado en la factura.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna el nombre guardado en la factura.
      */
     public String getNombrePaciente() {
         return nombrePaciente;
@@ -97,8 +97,8 @@ public class Factura {
 
     /**
      * Devuelve el apellido del paciente.
-     * Pre: ninguna.
-     * Post: retorna el apellido guardado en la factura.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna el apellido guardado en la factura.
      */
     public String getApellidoPaciente() {
         return apellidoPaciente;
@@ -106,8 +106,8 @@ public class Factura {
 
     /**
      * Devuelve la fecha de ingreso.
-     * Pre: ninguna.
-     * Post: retorna la fecha de ingreso como String.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna la fecha de ingreso como String.
      */
     public String getFechaIngreso() {
         return fechaIngreso;
@@ -115,8 +115,8 @@ public class Factura {
 
     /**
      * Devuelve la fecha de egreso.
-     * Pre: ninguna.
-     * Post: retorna la fecha de egreso como String.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna la fecha de egreso como String.
      */
     public String getFechaEgreso() {
         return fechaEgreso;
@@ -124,8 +124,8 @@ public class Factura {
 
     /**
      * Devuelve la cantidad de días de internación.
-     * Pre: ninguna.
-     * Post: retorna la cantidad de días o null si no hubo internación.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna la cantidad de días o null si no hubo internación.
      */
     public Integer getCantidadDiasInternacion() {
         return cantidadDiasInternacion;
@@ -133,8 +133,8 @@ public class Factura {
 
     /**
      * Devuelve el tipo de habitación.
-     * Pre: ninguna.
-     * Post: retorna el tipo de habitación o null si no hubo internación.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna el tipo de habitación o null si no hubo internación.
      */
     public String getTipoHabitacion() {
         return tipoHabitacion;
@@ -142,8 +142,8 @@ public class Factura {
 
     /**
      * Devuelve el costo de la habitación.
-     * Pre: ninguna.
-     * Post: retorna el costo o null si no hubo internación.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna el costo o null si no hubo internación.
      */
     public Double getCostoHabitacion() {
         return costoHabitacion;
@@ -152,8 +152,8 @@ public class Factura {
 
     /**
      * Devuelve el total de la factura.
-     * Pre: ninguna.
-     * Post: retorna el total calculado.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna el total calculado.
      */
     public Double getTotal() {
         return total;
@@ -161,8 +161,8 @@ public class Factura {
 
     /**
      * Devuelve la factura como String con toda la información.
-     * Pre: ninguna.
-     * Post: retorna el resumen de la factura.
+     * <br>Pre: ninguna.
+     * <br>Post: retorna el resumen de la factura.
      */
     @Override
     public String toString() {

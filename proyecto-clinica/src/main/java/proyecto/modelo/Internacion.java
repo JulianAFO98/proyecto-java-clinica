@@ -33,8 +33,8 @@ public class Internacion {
 	 *                         internado.
 	 * @param h                habitacion asignada al paciente.
 	 * @param fechaInternacion fecha de ingreso del paciente.
-	 * Pre: paciente != null, h != null, fechaInternacion != null
-	 * Post: se inicializa la internacion con 0 dias y la fecha de ingreso indicada.
+	 * <br>Pre: paciente != null, h != null, fechaInternacion != null
+	 * <br>Post: se inicializa la internacion con 0 dias y la fecha de ingreso indicada.
 	 */
 	public Internacion(Paciente paciente, Habitacion h, Date fechaInternacion) {
 		this.paciente = paciente;
@@ -48,8 +48,8 @@ public class Internacion {
 	 * en base a la fecha de alta recibida.
 	 * 
 	 * @param fechaDadoDeAlta fecha en que el paciente fue dado de alta.
-	 * Pre: fechaDadoDeAlta != null y fechaDadoDeAlta posterior a fechaInternacion.
-	 * Post: se actualiza el atributo cantidadDiasInternacion con la diferencia de
+	 * <br>Pre: fechaDadoDeAlta != null y fechaDadoDeAlta posterior a fechaInternacion.
+	 * <br>Post: se actualiza el atributo cantidadDiasInternacion con la diferencia de
 	 *       dias entre ambas fechas.
 	 */
 	public void darDeAlta(Date fechaDadoDeAlta) {
@@ -64,8 +64,8 @@ public class Internacion {
 	 * 
 	 * @param dias cantidad de dias a sumar.
 	 * @return objeto Date con la nueva fecha resultante.
-	 * Pre: dias >= 0
-	 * Post: retorna una nueva fecha sin modificar la fecha original de internacion.
+	 * <br>Pre: dias >= 0
+	 * <br>Post: retorna una nueva fecha sin modificar la fecha original de internacion.
 	 */
 	public Date obtenerFechaConDiasSumados(int dias) {
 		Calendar calendar = Calendar.getInstance();
@@ -78,8 +78,8 @@ public class Internacion {
 	 * Establece la cantidad de dias de internacion del paciente.
 	 * 
 	 * @param cantidadDiasInternacion cantidad total de dias internado.
-	 * Pre: cantidadDiasInternacion >= 0
-	 * Post: se actualiza el atributo cantidadDiasInternacion con el valor indicado.
+	 * <br>Pre: cantidadDiasInternacion >= 0
+	 * <br>Post: se actualiza el atributo cantidadDiasInternacion con el valor indicado.
 	 */
 	private void setCantidadDiasInternacion(int cantidadDiasInternacion) {
 		this.cantidadDiasInternacion = cantidadDiasInternacion;
