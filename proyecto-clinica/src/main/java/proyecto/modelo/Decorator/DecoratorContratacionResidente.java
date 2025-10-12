@@ -1,12 +1,27 @@
 package proyecto.modelo.Decorator;
 import proyecto.modelo.interfaces.IMedico;
 
+/**
+ * Clase que extiende de DecoratorContratacion y representa un decorador
+ * para la contratacion de medicos residentes.
+ * Aplica un aumento del 5% al sueldo calculado del medico.
+ * 
+ */
 public class DecoratorContratacionResidente extends DecoratorContratacion {
 	
+	/**
+	 * Constructor que recibe un objeto IMedico para ser decorado.
+	 * 
+	 * @param medico El medico a ser decorado.
+	 */
 	public DecoratorContratacionResidente(IMedico medico) {
 		super(medico);
 	}
 
+	/**
+	 * Calcula el sueldo del medico aplicando un aumento del 5%.
+	 * @return El sueldo calculado con el aumento aplicado.
+	 */
 	@Override
 	public double calcularSueldo() {
 		double aux = this.encapsulado.calcularSueldo();

@@ -1,0 +1,1 @@
+cmd.exe /X /D /C ""C:\Program Files\Eclipse Adoptium\jdk-8.0.462.8-hotspot\jre\..\bin\javadoc.exe" -J-Duser.language= -J-Duser.country= @options @packages"

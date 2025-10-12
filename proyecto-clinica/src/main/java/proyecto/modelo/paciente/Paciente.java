@@ -4,16 +4,18 @@ import proyecto.modelo.Domicilio;
 import proyecto.modelo.Persona;
 import proyecto.modelo.interfaces.IPaciente;
 
-public abstract class Paciente extends Persona implements IPaciente{
+public abstract class Paciente extends Persona implements IPaciente {
 	protected int numeroHistoriaClinica;
 	private static int contadorNumeroOrden = 0;
 	private int numeroOrdenPropio;
-	public Paciente(String dni, String nombre, String apellido, String ciudad, String telefono, Domicilio domicilio, int numeroHistoriaClinica)
-	{
+
+	public Paciente(String dni, String nombre, String apellido, String ciudad, String telefono, Domicilio domicilio,
+			int numeroHistoriaClinica) {
 		super(dni, nombre, apellido, ciudad, telefono, domicilio);
 		this.numeroHistoriaClinica = numeroHistoriaClinica;
-		this.numeroOrdenPropio=-1;
+		this.numeroOrdenPropio = -1;
 	}
+
 	/**
 	 * Devuelve el numero de historia clinica asociado al paciente.
 	 *
@@ -23,15 +25,17 @@ public abstract class Paciente extends Persona implements IPaciente{
 	 * Post: no se modifica el estado interno del objeto.
 	 */
 	public int getNumeroHistoriaClinica() {
-	    return numeroHistoriaClinica;
+		return numeroHistoriaClinica;
 	}
 
 	/**
 	 * Asigna al paciente un número de orden propio incremental.
 	 * 
-	 * <p>El número se obtiene incrementando en uno el contador estático
+	 * <p>
+	 * El número se obtiene incrementando en uno el contador estático
 	 * contadorNumeroOrden y almacenando el resultado en el atributo
-	 * numeroOrdenPropio del paciente actual.</p>
+	 * numeroOrdenPropio del paciente actual.
+	 * </p>
 	 *
 	 * Pre:  contadorNumeroOrden debe estar correctamente inicializado.
 	 * Post:  numeroOrdenPropio del paciente se incrementa en 1 con respecto
@@ -39,7 +43,7 @@ public abstract class Paciente extends Persona implements IPaciente{
 	 * Post:  contadorNumeroOrden se incrementa en 1.
 	 */
 	public void setNumeroOrdenPropio() {
-	    this.numeroOrdenPropio = ++contadorNumeroOrden;
+		this.numeroOrdenPropio = ++contadorNumeroOrden;
 	}
 
 	/**
@@ -52,7 +56,7 @@ public abstract class Paciente extends Persona implements IPaciente{
 	 * Post: no se modifica el estado interno del objeto.
 	 */
 	public int getNumeroOrdenPropio() {
-	    return this.numeroOrdenPropio;
+		return this.numeroOrdenPropio;
 	}
 
 	/**
@@ -60,7 +64,8 @@ public abstract class Paciente extends Persona implements IPaciente{
 	 * mostrando sus datos principales.
 	 *
 	 * @return una cadena con el formato:
-	 *         "Paciente [dni, Nombre: nombre, Apellido: apellido, Telefono: telefono]"
+	 *         "Paciente [dni, Nombre: nombre, Apellido: apellido, Telefono:
+	 *         telefono]"
 	 *
 	 * Pre: los atributos  dni, code nombre, code apellido y code telefono
 	 *      deben estar correctamente inicializados.
@@ -68,10 +73,10 @@ public abstract class Paciente extends Persona implements IPaciente{
 	 */
 	@Override
 	public String toString() {
-	    return "Paciente [" + getDni() + ", Nombre: " + getNombre() + ", Apellido: " + getApellido()
-	            + ", Telefono: " + getTelefono() + "]";
+		return String.format(
+				"Paciente [DNI: %s, Nombre: %s, Apellido: %s, Teléfono: %s, Ciudad: %s, Historia Clínica: %d, Orden: %d]",
+				getDni(), getNombre(), getApellido(), getTelefono(), getCiudad(), numeroHistoriaClinica,
+				numeroOrdenPropio);
 	}
-
-	
 
 }
