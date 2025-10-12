@@ -18,8 +18,8 @@ public class HabitacionPrivada extends Habitacion {
 	 * Crea una habitacion privada con un precio base y estado libre por defecto.
 	 * 
 	 * @param precioBase precio diario base.
-	 * @pre precioBase > 0
-	 * @post se crea una habitacion privada no ocupada con el precio base indicado.
+	 * Pre:n precioBase > 0
+	 * Post: se crea una habitacion privada no ocupada con el precio base indicado.
 	 */
 	public HabitacionPrivada(double precioBase) {
 		super(precioBase);
@@ -31,8 +31,8 @@ public class HabitacionPrivada extends Habitacion {
 	 * 
 	 * @param cantDias cantidad de dias de estadia.
 	 * @return precio total de la habitacion privada.
-	 * @pre cantDias > 0
-	 * @post retorna el monto a pagar aplicando los recargos correspondientes.
+	 * Pre: n cantDias > 0
+	 * Post: retorna el monto a pagar aplicando los recargos correspondientes.
 	 */
 	@Override
 	public double calcularPrecio(int cantDias) {
@@ -71,7 +71,7 @@ public class HabitacionPrivada extends Habitacion {
 	 * Cambia el estado de ocupacion de la habitacion.
 	 * 
 	 * @param ocupada true para marcar como ocupada, false para libre.
-	 * @post el estado de ocupacion se actualiza al valor indicado.
+	 * Post: el estado de ocupacion se actualiza al valor indicado.
 	 */
 	public void setOcupada(boolean ocupada) {
 		this.ocupada = ocupada;

@@ -60,7 +60,7 @@ public class App
         System.out.println(factura2);
         System.out.println(factura3);
 
-        System.out.println("Consultas del medico"+ medico2.getNombre()+" "+medico2.getApellido());
+        System.out.println("Consultas del medico "+ medico2.getNombre()+" "+medico2.getApellido() + "\n");
         ArrayList<ConsultaMedica> consultasDelMedico = c.obtenerConsultasDeUnMedicoPorFecha(medico2, new Date(120, 0, 1), new Date(125, 11, 31));
         for (ConsultaMedica consulta : consultasDelMedico) {
             System.out.println(consulta);

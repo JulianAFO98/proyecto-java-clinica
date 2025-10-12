@@ -21,10 +21,10 @@ public class Mayor extends Paciente{
 	 * @param otro el otro paciente con el cual se compara la prioridad de sala.
 	 * @return el paciente que tiene prioridad (entre this y otro).
 	 *
-	 * @pre otro != null
-	 * @post se retorna una referencia válida a un objeto Paciente
+	 * Pre: otro != null
+	 * Post: se retorna una referencia válida a un objeto Paciente
 	 *       que representa al paciente con mayor prioridad.
-	 * @post no se modifica el estado interno de ninguno de los objetos.
+	 * Post: no se modifica el estado interno de ninguno de los objetos.
 	 */
 	@Override
 	public Paciente decidirSala(Paciente otro)
@@ -39,9 +39,9 @@ public class Mayor extends Paciente{
 	 * @param n el paciente de tipo Nino a comparar.
 	 * @return this, indicando que el paciente actual tiene prioridad.
 	 *
-	 * @pre n != null
-	 * @post el valor de retorno es this
-	 * @post no se modifica el estado interno de ninguno de los objetos.
+	 * Pre: n != null
+	 * Post: el valor de retorno es this
+	 * Post: no se modifica el estado interno de ninguno de los objetos.
 	 */
 	@Override
 	public Paciente prioridadCon(Nino n)
@@ -56,9 +56,9 @@ public class Mayor extends Paciente{
 	 * @param j el paciente de tipo Joven a comparar.
 	 * @return j, indicando que el joven tiene prioridad.
 	 *
-	 * @pre j != null
-	 * @post el valor de retorno es j
-	 * @post no se modifica el estado interno de ninguno de los objetos.
+	 * Pre: j != null
+	 * Post: el valor de retorno es j
+	 * Post: no se modifica el estado interno de ninguno de los objetos.
 	 */
 	@Override
 	public Paciente prioridadCon(Joven j)
@@ -73,9 +73,9 @@ public class Mayor extends Paciente{
 	 * @param m el paciente de tipo Mayor a comparar.
 	 * @return this, indicando que el paciente actual tiene prioridad.
 	 *
-	 * @pre m != null
-	 * @post el valor de retorno es this
-	 * @post no se modifica el estado interno de ninguno de los objetos.
+	 * Pre: m != null
+	 * Post: el valor de retorno es this
+	 * Post: no se modifica el estado interno de ninguno de los objetos.
 	 */
 	@Override
 	public Paciente prioridadCon(Mayor m)
