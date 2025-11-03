@@ -1,6 +1,5 @@
 package proyecto;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import proyecto.modelo.Clinica;
