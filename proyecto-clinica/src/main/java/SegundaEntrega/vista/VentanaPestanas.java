@@ -1,16 +1,16 @@
 package SegundaEntrega.vista;
 
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class VentanaPestanas extends JFrame {
+public class VentanaPestanas extends JFrame implements IVista, KeyListener {
 
     // --- Atributos de Instancia (Componentes Accesibles) ---
     private JTabbedPane tabbedPane;
-    
+
     // Componentes de la Pestaña Asociados
     public JPanel panelAsociados;
     public JTextField campoNombre;
@@ -25,14 +25,13 @@ public class VentanaPestanas extends JFrame {
     public JButton btnIniciar;
     public JButton btnDetener;
     public JTextArea logAreaSimulacion;
-    // --------------------------------------------------------
 
     public VentanaPestanas() {
         setTitle("Gestión de Asociados y Simulación");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLocationRelativeTo(null);
-        
+
         // 1. Crear el JTabbedPane
         tabbedPane = new JTabbedPane();
 
@@ -46,38 +45,8 @@ public class VentanaPestanas extends JFrame {
 
         // 4. Agregar el JTabbedPane a la ventana principal
         add(tabbedPane);
-        
-        // 5. Agregar Listeners (Podrían ir aquí o en un método aparte)
-        configurarListeners();
-        
-        setVisible(true);
-    }
 
-    private void configurarListeners() {
-        // Ejemplo de Listener para el botón Crear Asociado
-        btnCrearAsociado.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nombre = campoNombre.getText();
-                String dni = campoDni.getText();
-                
-                // 1. Actualizar Log
-                logAreaAsociados.append("Asociado creado: " + nombre + " con DNI: " + dni + "\n");
-                
-                // 2. Actualizar Lista
-                listaModeloAsociados.addElement(nombre + " (" + dni + ")");
-                
-                // 3. Limpiar campos
-                campoNombre.setText("");
-                campoDni.setText("");
-            }
-        });
-        
-        // Listener para Iniciar Simulación
-        btnIniciar.addActionListener(e -> logAreaSimulacion.append("Simulación iniciada...\n"));
-        
-        // Listener para Detener Simulación
-        btnDetener.addActionListener(e -> logAreaSimulacion.append("Simulación detenida.\n"));
+        setVisible(true);
     }
 
     // --- Método para crear el Panel Asociados ---
@@ -86,7 +55,7 @@ public class VentanaPestanas extends JFrame {
 
         // Panel de Formulario y Lista (Norte)
         JPanel panelNorte = new JPanel(new GridLayout(1, 2, 10, 10));
-        
+
         // 1. Panel de Formulario (Izquierda del Norte)
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBorder(BorderFactory.createTitledBorder("Datos del Asociado"));
@@ -95,16 +64,34 @@ public class VentanaPestanas extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Nombre (Ahora se asigna al atributo)
-        gbc.gridx = 0; gbc.gridy = 0; panelFormulario.add(new JLabel("Nombre:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 0; campoNombre = new JTextField(15); panelFormulario.add(campoNombre, gbc);
-        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panelFormulario.add(new JLabel("Nombre:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        campoNombre = new JTextField(15);
+        this.campoNombre.setFocusable(true);
+        this.campoNombre.addKeyListener(this);
+        panelFormulario.add(campoNombre, gbc);
+
         // DNI (Ahora se asigna al atributo)
-        gbc.gridx = 0; gbc.gridy = 1; panelFormulario.add(new JLabel("DNI:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 1; campoDni = new JTextField(15); panelFormulario.add(campoDni, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panelFormulario.add(new JLabel("DNI:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        campoDni = new JTextField(15);
+        this.campoDni.setFocusable(true);
+        this.campoDni.addKeyListener(this);
+        panelFormulario.add(campoDni, gbc);
 
         // Botón Crear Asociado (Ahora se asigna al atributo)
-        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2; btnCrearAsociado = new JButton("Crear Asociado"); panelFormulario.add(btnCrearAsociado, gbc);
-        
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        btnCrearAsociado = new JButton("Crear Asociado");
+        btnCrearAsociado.setEnabled(false); // SE COLOCA EN FALSE AL INICIO
+        panelFormulario.add(btnCrearAsociado, gbc);
         panelNorte.add(panelFormulario);
 
         // 2. Lista de Elementos (Derecha del Norte)
@@ -114,9 +101,9 @@ public class VentanaPestanas extends JFrame {
         listaAsociados = new JList<>(listaModeloAsociados); // Se usa el modelo en la lista (atributo)
         JScrollPane scrollLista = new JScrollPane(listaAsociados);
         panelLista.add(scrollLista, BorderLayout.CENTER);
-        
+
         panelNorte.add(panelLista);
-        
+
         panel.add(panelNorte, BorderLayout.NORTH);
 
         // 3. Log (Centro)
@@ -125,7 +112,7 @@ public class VentanaPestanas extends JFrame {
         JScrollPane scrollLog = new JScrollPane(logAreaAsociados);
         scrollLog.setBorder(BorderFactory.createTitledBorder("Log de Acciones"));
         panel.add(scrollLog, BorderLayout.CENTER);
-        
+
         return panel;
     }
 
@@ -134,14 +121,14 @@ public class VentanaPestanas extends JFrame {
 
         // Panel de Botones (Norte)
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
-        btnIniciar = new JButton("Iniciar Simulación"); 
-        btnDetener = new JButton("Detener Simulación"); 
+        btnIniciar = new JButton("Iniciar Simulación");
+        btnDetener = new JButton("Detener Simulación");
         panelBotones.add(btnIniciar);
         panelBotones.add(btnDetener);
         panel.add(panelBotones, BorderLayout.NORTH);
 
         // Log (Centro)
-        logAreaSimulacion = new JTextArea(10, 40); 
+        logAreaSimulacion = new JTextArea(10, 40);
         logAreaSimulacion.setEditable(false);
         JScrollPane scrollLogSimulacion = new JScrollPane(logAreaSimulacion);
         scrollLogSimulacion.setBorder(BorderFactory.createTitledBorder("Log de Simulación"));
@@ -149,4 +136,71 @@ public class VentanaPestanas extends JFrame {
 
         return panel;
     }
+
+    @Override
+    public void addActionListenerAsociado(ActionListener al) {
+        btnCrearAsociado.setActionCommand(this.CREAR_ASOCIADO);
+        btnCrearAsociado.addActionListener(al);
+
+    }
+
+    @Override
+    public void addActionListenerSimulacion(ActionListener al) {
+        btnIniciar.addActionListener(al);
+        btnDetener.addActionListener(al);
+    }
+
+    @Override
+    public void mostrarMensaje(String s) {
+        
+    }
+
+    @Override
+    public String getDni() {
+        String dni = campoDni.getText();
+        return dni;
+    }
+
+    @Override
+    public String getNombre() {
+        String nombre = campoNombre.getText();
+        return nombre;
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+        String nombre = campoNombre.getText().trim();
+        String dni = campoDni.getText().trim();
+        boolean dniEsValido = false;
+        boolean nombreEsValido = !nombre.isEmpty();
+        try {
+            Integer.parseInt(dni);
+            dniEsValido = true;
+        } catch (NumberFormatException ex) {
+            dniEsValido = false;
+        }
+
+        if (dni.isEmpty()) {
+            dniEsValido = false;
+        }
+        this.btnCrearAsociado.setEnabled(dniEsValido && nombreEsValido);
+    }
+
+     @Override
+    public void agregarALog(String s) {
+        this.logAreaAsociados.append(s);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+       
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+      
+    }
+
+   
 }
