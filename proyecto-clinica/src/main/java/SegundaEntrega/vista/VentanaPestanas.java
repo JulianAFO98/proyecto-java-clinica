@@ -1,10 +1,14 @@
 package SegundaEntrega.vista;
 
 import javax.swing.*;
+
+import SegundaEntrega.modelo.Datos.Asociado;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
 
 public class VentanaPestanas extends JFrame implements IVista, KeyListener {
 
@@ -17,8 +21,8 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
     public JTextField campoDni;
     public JButton btnCrearAsociado;
     public JTextArea logAreaAsociados;
-    public JList<String> listaAsociados;
-    public DefaultListModel<String> listaModeloAsociados; // Modelo para manipular la lista
+    public JList<Asociado> listaAsociados;
+    public DefaultListModel<Asociado> listaModeloAsociados; // Modelo para manipular la lista
 
     // Componentes de la Pestaña Simulación
     public JPanel panelSimulacion;
@@ -98,7 +102,7 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
         JPanel panelLista = new JPanel(new BorderLayout());
         panelLista.setBorder(BorderFactory.createTitledBorder("Lista de Asociados"));
         listaModeloAsociados = new DefaultListModel<>(); // Se crea el modelo (atributo)
-        listaAsociados = new JList<>(listaModeloAsociados); // Se usa el modelo en la lista (atributo)
+        listaAsociados = new JList<Asociado>(listaModeloAsociados); // Se usa el modelo en la lista (atributo)
         JScrollPane scrollLista = new JScrollPane(listaAsociados);
         panelLista.add(scrollLista, BorderLayout.CENTER);
 
@@ -146,6 +150,8 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
 
     @Override
     public void addActionListenerSimulacion(ActionListener al) {
+        btnIniciar.setActionCommand(this.EMPEZAR_SIMULACION);
+        btnDetener.setActionCommand(this.FINALIZAR_SIMULACION);
         btnIniciar.addActionListener(al);
         btnDetener.addActionListener(al);
     }
@@ -188,10 +194,14 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
     }
 
      @Override
-    public void agregarALog(String s) {
+    public void agregarALogAsociados(String s) {
         this.logAreaAsociados.append(s);
     }
 
+    @Override 
+    public void agregarALogSimulacion(String s){
+        this.logAreaSimulacion.append(s);
+    }
     @Override
     public void keyTyped(KeyEvent e) {
        
@@ -200,6 +210,15 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
       
+    }
+
+    @Override
+    public void actualizarListas(List<Asociado> asociados) {
+        listaModeloAsociados.clear();
+        for (Asociado asociado : asociados) {
+            listaModeloAsociados.addElement(asociado);
+        }
+
     }
 
    

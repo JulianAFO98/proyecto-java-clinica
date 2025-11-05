@@ -30,9 +30,14 @@ public class ControladorAsociados implements ActionListener{
                 this.gestion.agregarAsociado(nombre,dni);
             } catch (Exception exc) {
             }
-            this.vista.agregarALog("Se creo un asociado\n");
+            this.vista.agregarALogAsociados("Se creo un asociado\n");
 
         }
+        actualizarListaAsociados();
+    }
+
+    public void actualizarListaAsociados(){
+        this.vista.actualizarListas(this.gestion.getAsociados());
     }
 
 }

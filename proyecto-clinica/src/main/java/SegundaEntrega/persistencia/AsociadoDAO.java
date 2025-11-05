@@ -3,8 +3,8 @@ package SegundaEntrega.persistencia;
 import java.util.List;
 
 public interface AsociadoDAO {
-    AsociadoDTO createAsociado();
-    AsociadoDTO getAsociadobyDNI(int dni);
+    AsociadoDTO getAsociadobyDNI(String dni);
     List<AsociadoDTO> getAllAsociados();
-    void darDeBajaAsociado(int dni);
+    void darDeBajaAsociado(String dni);
+    AsociadoDTO createAsociado(AsociadoDTO asociado);
 }
