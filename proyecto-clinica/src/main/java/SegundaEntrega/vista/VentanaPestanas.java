@@ -10,7 +10,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 
-public class VentanaPestanas extends JFrame implements IVista, KeyListener {
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+public class VentanaPestanas extends JFrame implements IVista, KeyListener, ListSelectionListener {
 
     // --- Atributos de Instancia (Componentes Accesibles) ---
     private JTabbedPane tabbedPane;
@@ -20,6 +23,7 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
     public JTextField campoNombre;
     public JTextField campoDni;
     public JButton btnCrearAsociado;
+    public JButton btnDarBajaAsociado;
     public JTextArea logAreaAsociados;
     public JList<Asociado> listaAsociados;
     public DefaultListModel<Asociado> listaModeloAsociados; // Modelo para manipular la lista
@@ -60,45 +64,52 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
         // Panel de Formulario y Lista (Norte)
         JPanel panelNorte = new JPanel(new GridLayout(1, 2, 10, 10));
 
-        // 1. Panel de Formulario (Izquierda del Norte)
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBorder(BorderFactory.createTitledBorder("Datos del Asociado"));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Nombre (Ahora se asigna al atributo)
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.gridwidth = 1;
         panelFormulario.add(new JLabel("Nombre:"), gbc);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
         campoNombre = new JTextField(15);
-        this.campoNombre.setFocusable(true);
-        this.campoNombre.addKeyListener(this);
+        campoNombre.setFocusable(true);
+        campoNombre.addKeyListener(this);
         panelFormulario.add(campoNombre, gbc);
 
-        // DNI (Ahora se asigna al atributo)
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        panelFormulario.add(new JLabel("DNI:"), gbc);
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        campoDni = new JTextField(15);
-        this.campoDni.setFocusable(true);
-        this.campoDni.addKeyListener(this);
-        panelFormulario.add(campoDni, gbc);
-
-        // Botón Crear Asociado (Ahora se asigna al atributo)
         gbc.gridx = 0;
         gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        panelFormulario.add(new JLabel("DNI:"), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         gbc.gridwidth = 2;
+        campoDni = new JTextField(15);
+        campoDni.setFocusable(true);
+        campoDni.addKeyListener(this);
+        panelFormulario.add(campoDni, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 1;
         btnCrearAsociado = new JButton("Crear Asociado");
-        btnCrearAsociado.setEnabled(false); // SE COLOCA EN FALSE AL INICIO
+        btnCrearAsociado.setEnabled(false);
         panelFormulario.add(btnCrearAsociado, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        btnDarBajaAsociado = new JButton("Dar baja asociado");
+        btnDarBajaAsociado.setEnabled(false);
+        panelFormulario.add(btnDarBajaAsociado, gbc);
         panelNorte.add(panelFormulario);
 
-        // 2. Lista de Elementos (Derecha del Norte)
         JPanel panelLista = new JPanel(new BorderLayout());
         panelLista.setBorder(BorderFactory.createTitledBorder("Lista de Asociados"));
         listaModeloAsociados = new DefaultListModel<>(); // Se crea el modelo (atributo)
@@ -110,7 +121,6 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
 
         panel.add(panelNorte, BorderLayout.NORTH);
 
-        // 3. Log (Centro)
         logAreaAsociados = new JTextArea(5, 40); // Ahora se asigna al atributo
         logAreaAsociados.setEditable(false);
         JScrollPane scrollLog = new JScrollPane(logAreaAsociados);
@@ -123,7 +133,6 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
     private JPanel crearPanelSimulacion() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
 
-        // Panel de Botones (Norte)
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
         btnIniciar = new JButton("Iniciar Simulación");
         btnDetener = new JButton("Detener Simulación");
@@ -131,7 +140,6 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
         panelBotones.add(btnDetener);
         panel.add(panelBotones, BorderLayout.NORTH);
 
-        // Log (Centro)
         logAreaSimulacion = new JTextArea(10, 40);
         logAreaSimulacion.setEditable(false);
         JScrollPane scrollLogSimulacion = new JScrollPane(logAreaSimulacion);
@@ -145,20 +153,28 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
     public void addActionListenerAsociado(ActionListener al) {
         btnCrearAsociado.setActionCommand(this.CREAR_ASOCIADO);
         btnCrearAsociado.addActionListener(al);
-
+        btnDarBajaAsociado.setActionCommand(this.DAR_BAJA_ASOCIADO);
+        btnDarBajaAsociado.addActionListener(al);
+        listaAsociados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // <-- nuevo
+        listaAsociados.addListSelectionListener(this);
     }
 
     @Override
     public void addActionListenerSimulacion(ActionListener al) {
         btnIniciar.setActionCommand(this.EMPEZAR_SIMULACION);
-        btnDetener.setActionCommand(this.FINALIZAR_SIMULACION);
         btnIniciar.addActionListener(al);
+        btnDetener.setActionCommand(this.FINALIZAR_SIMULACION);
         btnDetener.addActionListener(al);
     }
 
     @Override
     public void mostrarMensaje(String s) {
-        
+
+    }
+
+    @Override
+    public Asociado getAsociadoSeleccionado() {
+        return (Asociado) listaAsociados.getSelectedValue();
     }
 
     @Override
@@ -193,23 +209,24 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
         this.btnCrearAsociado.setEnabled(dniEsValido && nombreEsValido);
     }
 
-     @Override
+    @Override
     public void agregarALogAsociados(String s) {
         this.logAreaAsociados.append(s);
     }
 
-    @Override 
-    public void agregarALogSimulacion(String s){
+    @Override
+    public void agregarALogSimulacion(String s) {
         this.logAreaSimulacion.append(s);
     }
+
     @Override
     public void keyTyped(KeyEvent e) {
-       
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-      
+
     }
 
     @Override
@@ -221,5 +238,28 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener {
 
     }
 
-   
+    public void limpiarCamposAsociado() {
+        campoNombre.setText("");
+        campoDni.setText("");
+        btnCrearAsociado.setEnabled(false);
+        btnDarBajaAsociado.setEnabled(false);
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (e.getSource() == listaAsociados) {
+            if (!e.getValueIsAdjusting()) {
+                Asociado seleccionado = listaAsociados.getSelectedValue();
+                System.out.println("Seleccionado: " + seleccionado);
+                if (seleccionado != null) {
+                    btnDarBajaAsociado.setEnabled(true);
+                    btnCrearAsociado.setEnabled(false);
+                } else {
+                    btnDarBajaAsociado.setEnabled(false);
+                    btnCrearAsociado.setEnabled(true);
+                }
+            }
+        }
+    }
+
 }

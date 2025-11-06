@@ -5,6 +5,7 @@ import java.util.List;
 public interface AsociadoDAO {
     AsociadoDTO getAsociadobyDNI(String dni);
     List<AsociadoDTO> getAllAsociados();
-    void darDeBajaAsociado(String dni);
+    void darDeBajaAsociado(long id);
     AsociadoDTO createAsociado(AsociadoDTO asociado);
+    
 }

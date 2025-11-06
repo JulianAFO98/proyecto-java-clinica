@@ -33,4 +33,8 @@ public class GestionLlamados {
         List<Asociado> asociados = Utils.fromDTOtoClass(asociadosDTO);
         return asociados;
     }
+
+    public void eliminarAsociado(Asociado asociadoSeleccionado) {
+        asociadoDao.darDeBajaAsociado(asociadoSeleccionado.getId());
+    }
 }
