@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import SegundaEntrega.modelo.Datos.GestionLlamados;
+import SegundaEntrega.persistencia.AsociadoExistenteException;
 import SegundaEntrega.vista.IVista;
 import SegundaEntrega.modelo.Datos.Asociado;
 
@@ -25,8 +26,10 @@ public class ControladorAsociados implements ActionListener {
             String nombre = this.vista.getNombre();
             String dni = this.vista.getDni();
             try {
-                this.gestion.agregarAsociado(nombre, dni);
-            } catch (Exception exc) {
+                this.gestion.agregarAsociado(nombre,dni);
+                this.vista.agregarALogAsociados("Se creo un asociado\n");
+            } catch (AsociadoExistenteException exception) {
+                this.vista.mostrarMensaje("El dni ya existe: "+exception.getDni());
             }
             this.vista.agregarALogAsociados("Se creo un asociado\n");
             this.vista.limpiarCamposAsociado();

@@ -4,6 +4,7 @@ import java.util.List;
 
 import SegundaEntrega.persistencia.AsociadoDAO;
 import SegundaEntrega.persistencia.AsociadoDTO;
+import SegundaEntrega.persistencia.AsociadoExistenteException;
 import SegundaEntrega.persistencia.PersistenciaAsociado;
 import SegundaEntrega.utils.Utils;
 
@@ -21,11 +22,14 @@ public class GestionLlamados {
         this.asociadoDao = new PersistenciaAsociado();
     }
 
-    public void agregarAsociado(String nombre, String dni) {
-        try {
-            AsociadoDTO a = asociadoDao.createAsociado(new AsociadoDTO(dni, true, nombre));
-        } catch (Exception e) {
+    public void agregarAsociado(String nombre, String dni) throws AsociadoExistenteException {
+
+        AsociadoDTO asociado = asociadoDao.getAsociadobyDNI(dni);
+        if (asociado != null) {
+            throw new AsociadoExistenteException("El dni ya existe", dni);
         }
+        AsociadoDTO a = asociadoDao.createAsociado(new AsociadoDTO(dni, true, nombre));
+
     }
 
     public List<Asociado> getAsociados() {

@@ -169,7 +169,7 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
 
     @Override
     public void mostrarMensaje(String s) {
-
+        JOptionPane.showMessageDialog(this, s);
     }
 
     @Override
