@@ -22,7 +22,7 @@ public class ControladorAsociados implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();
-        if (comando.equals(this.vista.CREAR_ASOCIADO)) {
+        if (comando.equals(IVista.CREAR_ASOCIADO)) {
             String nombre = this.vista.getNombre();
             String dni = this.vista.getDni();
             try {
@@ -34,10 +34,11 @@ public class ControladorAsociados implements ActionListener {
             this.vista.agregarALogAsociados("Se creo un asociado\n");
             this.vista.limpiarCamposAsociado();
 
-        } else if (comando.equals(this.vista.DAR_BAJA_ASOCIADO)) {
+        } else if (comando.equals(IVista.DAR_BAJA_ASOCIADO)) {
             Asociado asociadoSeleccionado = this.getAsociadoSeleccionado();
             if (asociadoSeleccionado != null) {
                 this.gestion.eliminarAsociado(asociadoSeleccionado);
+                this.vista.limpiarCamposAsociado();
                 this.vista.agregarALogAsociados("Se dio de baja un asociado\n");
             }
         }

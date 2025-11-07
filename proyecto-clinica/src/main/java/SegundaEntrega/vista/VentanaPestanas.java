@@ -32,6 +32,7 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
     public JPanel panelSimulacion;
     public JButton btnIniciar;
     public JButton btnDetener;
+    public JButton btnOperario;
     public JTextArea logAreaSimulacion;
 
     public VentanaPestanas() {
@@ -134,10 +135,12 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         JPanel panel = new JPanel(new BorderLayout(10, 10));
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
-        btnIniciar = new JButton("Iniciar Simulación");
-        btnDetener = new JButton("Detener Simulación");
+        btnIniciar = new JButton("Iniciar Simulacion");
+        btnDetener = new JButton("Detener Simulacion");
+        btnOperario = new JButton("Llamar Operario");
         panelBotones.add(btnIniciar);
         panelBotones.add(btnDetener);
+        panelBotones.add(btnOperario);
         panel.add(panelBotones, BorderLayout.NORTH);
 
         logAreaSimulacion = new JTextArea(10, 40);
@@ -151,9 +154,9 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
 
     @Override
     public void addActionListenerAsociado(ActionListener al) {
-        btnCrearAsociado.setActionCommand(this.CREAR_ASOCIADO);
+        btnCrearAsociado.setActionCommand(IVista.CREAR_ASOCIADO);
         btnCrearAsociado.addActionListener(al);
-        btnDarBajaAsociado.setActionCommand(this.DAR_BAJA_ASOCIADO);
+        btnDarBajaAsociado.setActionCommand(IVista.DAR_BAJA_ASOCIADO);
         btnDarBajaAsociado.addActionListener(al);
         listaAsociados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // <-- nuevo
         listaAsociados.addListSelectionListener(this);
@@ -161,10 +164,12 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
 
     @Override
     public void addActionListenerSimulacion(ActionListener al) {
-        btnIniciar.setActionCommand(this.EMPEZAR_SIMULACION);
+        btnIniciar.setActionCommand(IVista.EMPEZAR_SIMULACION);
         btnIniciar.addActionListener(al);
-        btnDetener.setActionCommand(this.FINALIZAR_SIMULACION);
+        btnDetener.setActionCommand(IVista.FINALIZAR_SIMULACION);
         btnDetener.addActionListener(al);
+        btnOperario.setActionCommand(IVista.LLAMAR_OPERARIO);
+        btnOperario.addActionListener(al);
     }
 
     @Override
