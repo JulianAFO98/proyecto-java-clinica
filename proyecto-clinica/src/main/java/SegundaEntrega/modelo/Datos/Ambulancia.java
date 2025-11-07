@@ -10,6 +10,11 @@ public class Ambulancia {
         this.estado = new Disponible(this);
     }
 
+
+    public synchronized void ejecutarAmbulancia(){
+        // Accion concurrente de la ambulancia
+    }
+
     public void setEstado(EstadoAmbulancia estado) {
         this.estado = estado;
     }
@@ -29,5 +34,7 @@ public class Ambulancia {
     public void solicitarMantenimiento() {
         estado.solicitarMantenimiento();
     }
+
+
 
 }

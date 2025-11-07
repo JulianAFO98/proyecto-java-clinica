@@ -16,7 +16,7 @@ public class Utils {
             String nombre = asociadoDTO.getNombre();
             int id = asociadoDTO.getId();
             boolean alta = asociadoDTO.isAlta();
-            asociados.add(new Asociado(nombre, id, dni, alta));
+            asociados.add(new Asociado(nombre, id, dni, alta, null));
         }
 
         return asociados;

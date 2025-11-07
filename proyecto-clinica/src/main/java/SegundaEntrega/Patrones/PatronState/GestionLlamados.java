@@ -1,5 +1,6 @@
 package SegundaEntrega.Patrones.PatronState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import SegundaEntrega.modelo.Datos.Ambulancia;
@@ -53,6 +54,12 @@ public class GestionLlamados {
     }
 
     public void empezarSimulacion() {
+        ArrayList<Asociado> asociados = (ArrayList<Asociado>) getAsociados();
+        for (Asociado asociado : asociados) {
+            asociado.setAmbulancia(ambulancia);
+            Thread hiloAsociado = new Thread(asociado);
+            hiloAsociado.start();
+        }
         //code
     }
 }
