@@ -21,4 +21,6 @@ public interface IVista {
     static final String FINALIZAR_SIMULACION = "FINALIZAR_SIMULACION";
     static final String DAR_BAJA_ASOCIADO = "DAR_BAJA_ASOCIADO";
     static final String SELECCIONAR_ASOCIADO = "SELECCIONAR_ASOCIADO";
+    static final String LLAMAR_OPERARIO = "LLAMAR_OPERARIO";
+    
 }

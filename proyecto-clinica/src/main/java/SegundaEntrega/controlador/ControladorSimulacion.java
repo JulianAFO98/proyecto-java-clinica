@@ -24,9 +24,14 @@ public class ControladorSimulacion implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String comando  = e.getActionCommand();
         if(comando.equals(this.vista.EMPEZAR_SIMULACION)){
+            this.gestion.empezarSimulacion();
             this.vista.agregarALogSimulacion("Iniciada la simulacion\n");
         }else if(comando.equals(this.vista.FINALIZAR_SIMULACION)){
+            this.gestion.finalizarSimulacion();
             this.vista.agregarALogSimulacion("Finalizada la simulacion\n");
+        }else if(comando.equals(this.vista.LLAMAR_OPERARIO)){
+            this.gestion.llamarOperario();
+            this.vista.agregarALogSimulacion("Se llamo al operario\n");
         }
     }
 

@@ -18,7 +18,6 @@ public class GestionLlamados {
     private Ambulancia ambulancia;
     private Operario ope;
     private AsociadoDAO asociadoDao;
-
     public GestionLlamados() {
         this.ambulancia = new Ambulancia();
         this.ope = new Operario();
@@ -43,5 +42,17 @@ public class GestionLlamados {
 
     public void eliminarAsociado(Asociado asociadoSeleccionado) {
         asociadoDao.darDeBajaAsociado(asociadoSeleccionado.getId());
+    }
+
+    public void llamarOperario() {
+        //code
+    }
+
+    public void finalizarSimulacion() {
+        //code
+    }
+
+    public void empezarSimulacion() {
+        //code
     }
 }
