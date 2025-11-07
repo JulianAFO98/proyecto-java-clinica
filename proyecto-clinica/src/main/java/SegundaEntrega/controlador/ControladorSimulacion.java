@@ -3,7 +3,7 @@ package SegundaEntrega.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import SegundaEntrega.modelo.Datos.GestionLlamados;
+import SegundaEntrega.Patrones.PatronState.GestionLlamados;
 import SegundaEntrega.vista.IVista;
 
 public class ControladorSimulacion implements ActionListener{

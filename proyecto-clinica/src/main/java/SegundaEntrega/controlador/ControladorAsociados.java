@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import SegundaEntrega.modelo.Datos.GestionLlamados;
 import SegundaEntrega.persistencia.AsociadoExistenteException;
 import SegundaEntrega.vista.IVista;
+import SegundaEntrega.Patrones.PatronState.GestionLlamados;
 import SegundaEntrega.modelo.Datos.Asociado;
 
 public class ControladorAsociados implements ActionListener {
@@ -31,7 +31,6 @@ public class ControladorAsociados implements ActionListener {
             } catch (AsociadoExistenteException exception) {
                 this.vista.mostrarMensaje("El dni ya existe: "+exception.getDni());
             }
-            this.vista.agregarALogAsociados("Se creo un asociado\n");
             this.vista.limpiarCamposAsociado();
 
         } else if (comando.equals(this.vista.DAR_BAJA_ASOCIADO)) {
