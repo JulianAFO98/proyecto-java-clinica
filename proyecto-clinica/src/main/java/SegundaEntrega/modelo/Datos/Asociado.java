@@ -9,6 +9,7 @@ public class Asociado implements Runnable {
     private String name;
     private Ambulancia ambulancia;
     private String estadoAsociado; // Nuevo atributo para el estado del asociado
+    private final Random random = new Random();
 
     public Asociado(String name, int id, String dni, boolean alta, Ambulancia ambulancia) {
         this.id = id;
@@ -16,10 +17,7 @@ public class Asociado implements Runnable {
         this.alta = alta;
         this.name = name;
         this.ambulancia = ambulancia;
-        Random r = new Random();
-        this.estadoAsociado = (r.nextInt(2) == 0)
-                ? "ATENCION_DOMICILIO"
-                : "TRASLADO_CLINICA";
+        this.estadoAsociado = "ATENCION_DOMICILIO";
     }
 
     @Override
@@ -27,8 +25,11 @@ public class Asociado implements Runnable {
         System.out.println("Ejecutando hilo de asociado: " + name);
         while (ambulancia.isSimulacionActiva()) {
             try {
+                this.estadoAsociado = random.nextBoolean() ? "ATENCION_DOMICILIO" : "TRASLADO_CLINICA";
+                System.out.println(
+                        "Asociado " + name + " solicita servicio de ambulancia para estado: " + estadoAsociado);
                 ambulancia.ejecutarAmbulancia(this); // Ejemplo de llamada a un metodo de Ambulancia
-                Thread.sleep(2000); // Simula trabajo con una pausa
+                Thread.sleep(1500); // Simula trabajo con una pausa
                 ambulancia.liberarAmbulancia(this);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

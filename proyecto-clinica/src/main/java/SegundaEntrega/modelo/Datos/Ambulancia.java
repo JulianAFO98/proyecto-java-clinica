@@ -17,17 +17,20 @@ public class Ambulancia extends Observable {
     public synchronized void ejecutarAmbulancia(Asociado asociado) {
         // Accion concurrente de la ambulancia
         if (simulacionActiva) {
-            while (ambulanciaEnUso) {
+            System.out.println("Ejecutando ambulancia para el asociado: " + asociado.getName());
+            while (ambulanciaEnUso && simulacionActiva) {
                 try {
+                    System.out.println("Ambulancia ocupada, asociado " + asociado.getName() + " esperando...");
                     wait();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
             }
-            //System.out.println("Debajo del while");
+            // System.out.println("Debajo del while");
             ambulanciaEnUso = true;
             resolverSolicitud(asociado);
         }
+
     }
 
     public synchronized void liberarAmbulancia(Asociado asociado) {
@@ -36,9 +39,9 @@ public class Ambulancia extends Observable {
         notifyAll();
     }
 
-
     private synchronized void resolverSolicitud(Asociado asociado) {
         String estadoAsociado = asociado.getEstadoAsoociado();
+        System.out.println("Resolviendo solicitud para el asociado: " + asociado.getName());
         switch (estadoAsociado) {
             case "ATENCION_DOMICILIO":
                 solicitarAtencionDomicilio();
@@ -49,7 +52,6 @@ public class Ambulancia extends Observable {
             default:
                 System.out.println("Estado desconocido para el asociado: " + estadoAsociado);
         }
-
     }
 
     public boolean isSimulacionActiva() {
@@ -58,10 +60,11 @@ public class Ambulancia extends Observable {
 
     public void setEstado(EstadoAmbulancia estado) {
         this.estado = estado;
+        System.out.println("Estado de la ambulancia cambiado a: " + estado);
     }
 
     public void solicitarAtencionDomicilio() {
-       // System.out.println("Llamado a domicilio");
+        // System.out.println("Llamado a domicilio");
         estado.solicitarAtencionDomicilio();
     }
 
@@ -85,7 +88,5 @@ public class Ambulancia extends Observable {
         setChanged();
         notifyObservers(mensaje);
     }
-
-    
 
 }
