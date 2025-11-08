@@ -13,26 +13,28 @@ public class EnTaller extends Observable implements EstadoAmbulancia {
 
     @Override
     public void solicitarAtencionDomicilio() {
-        setChanged();
-        notifyObservers("En taller, no se puede atender a domicilio");
+        ambulancia.notificarCambio("En taller, no se puede atender a domicilio");
     }
 
     @Override
     public void solicitarTrasladoClinica() {
-        setChanged();
-        notifyObservers("En taller, no se puede trasladar a clinica");
+        
+        ambulancia.notificarCambio("En taller, no se puede trasladar a clinica");
+
     }
 
     @Override
     public void retornoAutomatico() {
-        setChanged();
-        notifyObservers("Continua en taller");
+
+        ambulancia.notificarCambio("Continua en taller");
+
     }
 
     @Override
     public void solicitarMantenimiento() {
-        setChanged();
-        notifyObservers("Mantenimiento completado, regresando del taller");
+
+        ambulancia.notificarCambio("Mantenimiento completado, regresando del taller");
+
         ambulancia.setEstado(new RegresandoDelTaller(ambulancia));
     }
 }

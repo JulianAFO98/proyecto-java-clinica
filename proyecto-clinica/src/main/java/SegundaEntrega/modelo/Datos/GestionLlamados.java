@@ -16,8 +16,8 @@ public class GestionLlamados {
     private Ambulancia ambulancia;
     private Operario ope;
     private AsociadoDAO asociadoDao;
-    public GestionLlamados() {
-        this.ambulancia = new Ambulancia();
+    public GestionLlamados(Ambulancia a) {
+        this.ambulancia = a;
         this.ope = new Operario();
         this.asociadoDao = new PersistenciaAsociado();
     }
@@ -52,11 +52,11 @@ public class GestionLlamados {
 
     public void empezarSimulacion() {
         ArrayList<Asociado> asociados = (ArrayList<Asociado>) getAsociados();
+        System.out.println(asociados);
         for (Asociado asociado : asociados) {
             asociado.setAmbulancia(ambulancia);
             Thread hiloAsociado = new Thread(asociado);
             hiloAsociado.start();
         }
-        //code
     }
 }

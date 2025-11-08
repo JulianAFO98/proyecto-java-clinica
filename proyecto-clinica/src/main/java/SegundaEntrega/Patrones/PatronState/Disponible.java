@@ -13,29 +13,25 @@ public class Disponible extends Observable implements EstadoAmbulancia {
 
     @Override
     public void solicitarAtencionDomicilio() {
-        setChanged();
-        notifyObservers("Atendiendo a domicilio");
+        ambulancia.notificarCambio("Atendiendo a domicilio");
+        System.out.println("Hola");
         ambulancia.setEstado(new AtendiendoADomicilio(ambulancia));
     }
 
     @Override
     public void solicitarTrasladoClinica() {
-        setChanged();
-        notifyObservers("Trasladando a clinica");
+        ambulancia.notificarCambio("Trasladando a clinica");
         ambulancia.setEstado(new TrasladandoPaciente(ambulancia));
     }
 
     @Override
     public void retornoAutomatico() {
-        setChanged();
-        notifyObservers("Ambulancia disponible");
-        // La ambulancia ya esta disponible, no hacer nada
+        ambulancia.notificarCambio("Ambulancia disponible");
     }
 
     @Override
     public void solicitarMantenimiento() {
-        setChanged();
-        notifyObservers("Solicitando mantenimiento");
+        ambulancia.notificarCambio("Solicitando mantenimiento");
         ambulancia.setEstado(new EnTaller(ambulancia));
     }
 }

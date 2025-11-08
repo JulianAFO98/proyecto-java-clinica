@@ -1,5 +1,7 @@
 package SegundaEntrega.modelo.Datos;
 
+import java.util.Random;
+
 public class Asociado implements Runnable {
     private int id;
     private String dni;
@@ -14,7 +16,10 @@ public class Asociado implements Runnable {
         this.alta = alta;
         this.name = name;
         this.ambulancia = ambulancia;
-        this.estadoAsociado = "ATENCION_DOMICILIO"; // Estado inicial
+        Random r = new Random();
+        this.estadoAsociado = (r.nextInt(2) == 0)
+                ? "ATENCION_DOMICILIO"
+                : "TRASLADO_CLINICA";
     }
 
     @Override
@@ -23,8 +28,8 @@ public class Asociado implements Runnable {
         while (ambulancia.isSimulacionActiva()) {
             try {
                 ambulancia.ejecutarAmbulancia(this); // Ejemplo de llamada a un metodo de Ambulancia
-                Thread.sleep(1000); // Simula trabajo con una pausa
-
+                Thread.sleep(2000); // Simula trabajo con una pausa
+                ambulancia.liberarAmbulancia(this);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

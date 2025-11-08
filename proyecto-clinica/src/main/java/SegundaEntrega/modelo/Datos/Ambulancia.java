@@ -16,7 +16,7 @@ public class Ambulancia extends Observable {
 
     public synchronized void ejecutarAmbulancia(Asociado asociado) {
         // Accion concurrente de la ambulancia
-        if (!simulacionActiva) {
+        if (simulacionActiva) {
             while (ambulanciaEnUso) {
                 try {
                     wait();
@@ -24,14 +24,20 @@ public class Ambulancia extends Observable {
                     Thread.currentThread().interrupt();
                 }
             }
+            //System.out.println("Debajo del while");
             ambulanciaEnUso = true;
             resolverSolicitud(asociado);
-            // Logica de la ambulancia aqui
         }
     }
 
-    private void resolverSolicitud(Asociado asociado) {
-        // Lógica para llevar al asociado
+    public synchronized void liberarAmbulancia(Asociado asociado) {
+        this.ambulanciaEnUso = false;
+        this.retornoAutomatico();
+        notifyAll();
+    }
+
+
+    private synchronized void resolverSolicitud(Asociado asociado) {
         String estadoAsociado = asociado.getEstadoAsoociado();
         switch (estadoAsociado) {
             case "ATENCION_DOMICILIO":
@@ -55,6 +61,7 @@ public class Ambulancia extends Observable {
     }
 
     public void solicitarAtencionDomicilio() {
+       // System.out.println("Llamado a domicilio");
         estado.solicitarAtencionDomicilio();
     }
 
@@ -66,8 +73,19 @@ public class Ambulancia extends Observable {
         estado.retornoAutomatico();
     }
 
+    public void setSimulacionActiva(boolean simulacionActiva) {
+        this.simulacionActiva = simulacionActiva;
+    }
+
     public void solicitarMantenimiento() {
         estado.solicitarMantenimiento();
     }
+
+    public void notificarCambio(String mensaje) {
+        setChanged();
+        notifyObservers(mensaje);
+    }
+
+    
 
 }

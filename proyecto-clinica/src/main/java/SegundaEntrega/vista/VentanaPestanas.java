@@ -221,7 +221,7 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
 
     @Override
     public void agregarALogSimulacion(String s) {
-        this.logAreaSimulacion.append(s);
+        this.logAreaSimulacion.append(s+"\n");
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.Observable;
 
 import SegundaEntrega.modelo.Datos.Ambulancia;
 
-public class AtendiendoADomicilio extends Observable implements EstadoAmbulancia {
+public class AtendiendoADomicilio  implements EstadoAmbulancia {
     private Ambulancia ambulancia;
 
     public AtendiendoADomicilio(Ambulancia ambulancia) {
@@ -17,20 +17,19 @@ public class AtendiendoADomicilio extends Observable implements EstadoAmbulancia
 
     @Override
     public void solicitarTrasladoClinica() {
-        setChanged();
-        notifyObservers("No puede solicitar traslado mientras atiende a domicilio");
+        ambulancia.notificarCambio("No puede solicitar traslado mientras atiende a domicilio");
+       
     }
 
     @Override
     public void retornoAutomatico() {
-        setChanged();
-        notifyObservers("Regresando sin paciente");
+        ambulancia.notificarCambio("Regresando sin paciente");
         ambulancia.setEstado(new RegresandoSinPaciente(ambulancia));
     }
 
     @Override
     public void solicitarMantenimiento() {
-        setChanged();
-        notifyObservers("No puede solicitar mantenimiento mientras atiende a domicilio");
+        ambulancia.notificarCambio("No puede solicitar mantenimiento mientras atiende a domicilio");
+       
     }
 }

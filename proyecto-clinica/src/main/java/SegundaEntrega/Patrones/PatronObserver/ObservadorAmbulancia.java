@@ -3,24 +3,25 @@ package SegundaEntrega.Patrones.PatronObserver;
 import java.util.Observable;
 import java.util.Observer;
 
-import SegundaEntrega.controlador.ControladorAsociados;
+import SegundaEntrega.controlador.ControladorSimulacion;
 import SegundaEntrega.modelo.Datos.Ambulancia;
 
 public class ObservadorAmbulancia implements Observer {
-    private Ambulancia ambulancia;
-    private ControladorAsociados controladorAsociados;
+    private Observable ambulancia;
+    private ControladorSimulacion controladorSimulacion;
 
-    public ObservadorAmbulancia(Ambulancia ambulancia, ControladorAsociados controladorAsociados) {
+    public ObservadorAmbulancia(Ambulancia ambulancia, ControladorSimulacion controladorSimulacion) {
         this.ambulancia = ambulancia;
         this.ambulancia.addObserver(this);
-        this.controladorAsociados = controladorAsociados;
+        this.controladorSimulacion = controladorSimulacion;
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o instanceof Ambulancia) {
-            Ambulancia ambulancia = (Ambulancia) o;
-            System.out.println("Estado de la ambulancia actualizado: " + ambulancia.getEstado());
-        }
+        if (o != this.ambulancia)
+            throw new IllegalArgumentException();
+        Ambulancia ambulancia = (Ambulancia) o;
+        String mensaje = (String) arg;
+        this.controladorSimulacion.agregarALogSimulacion(mensaje);
     }
 }

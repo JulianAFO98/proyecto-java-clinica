@@ -13,29 +13,26 @@ public class RegresandoSinPaciente extends Observable implements EstadoAmbulanci
 
     @Override
     public void solicitarAtencionDomicilio() {
-        setChanged();
-        notifyObservers("Cambio a atendiendo a domicilio");
+        ambulancia.notificarCambio("Cambio a atendiendo a domicilio");
         ambulancia.setEstado(new AtendiendoADomicilio(ambulancia));
     }
 
     @Override
     public void solicitarTrasladoClinica() {
-        setChanged();
-        notifyObservers("Cambio a trasladando paciente");
+        ambulancia.notificarCambio("Cambio a trasladando paciente");
         ambulancia.setEstado(new TrasladandoPaciente(ambulancia));
     }
 
     @Override
     public void retornoAutomatico() {
-        setChanged();
-        notifyObservers("Cambio a disponible");
+        ambulancia.notificarCambio("Cambio a disponible");
         ambulancia.setEstado(new Disponible(ambulancia));
     }
 
     @Override
     public void solicitarMantenimiento() {
-        setChanged();
-        notifyObservers("No puede solicitar mantenimiento mientras regresa sin paciente");
+        ambulancia.notificarCambio("No puede solicitar mantenimiento mientras regresa sin paciente");
+
     }
 
 }

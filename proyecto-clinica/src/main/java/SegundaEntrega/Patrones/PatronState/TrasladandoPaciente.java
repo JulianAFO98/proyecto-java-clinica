@@ -17,20 +17,18 @@ public class TrasladandoPaciente extends Observable implements EstadoAmbulancia 
 
     @Override
     public void solicitarTrasladoClinica() {
-        setChanged();
-        notifyObservers("No puede solicitar traslado mientras ya esta trasladando un paciente");
+        ambulancia.notificarCambio("No puede solicitar traslado mientras ya esta trasladando un paciente");
     }
 
     @Override
     public void retornoAutomatico() {
-        setChanged();
-        notifyObservers("Cambio a disponible");
+        ambulancia.notificarCambio("Cambio a disponible");
         ambulancia.setEstado(new Disponible(ambulancia));
     }
 
     @Override
     public void solicitarMantenimiento() {
-        setChanged();
-        notifyObservers("No puede solicitar mantenimiento mientras esta trasladando un paciente");
+        ambulancia.notificarCambio("No puede solicitar mantenimiento mientras esta trasladando un paciente");
+
     }
 }
