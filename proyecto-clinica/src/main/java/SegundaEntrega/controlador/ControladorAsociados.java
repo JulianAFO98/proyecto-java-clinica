@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import SegundaEntrega.persistencia.AsociadoExistenteException;
 import SegundaEntrega.vista.IVista;
-import SegundaEntrega.Patrones.PatronState.GestionLlamados;
 import SegundaEntrega.modelo.Datos.Asociado;
+import SegundaEntrega.modelo.Datos.GestionLlamados;
 
 public class ControladorAsociados implements ActionListener {
     private IVista vista;

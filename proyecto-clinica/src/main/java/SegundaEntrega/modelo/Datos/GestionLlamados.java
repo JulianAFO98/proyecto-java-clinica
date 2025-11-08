@@ -1,11 +1,8 @@
-package SegundaEntrega.Patrones.PatronState;
+package SegundaEntrega.modelo.Datos;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import SegundaEntrega.modelo.Datos.Ambulancia;
-import SegundaEntrega.modelo.Datos.Asociado;
-import SegundaEntrega.modelo.Datos.Operario;
 import SegundaEntrega.persistencia.AsociadoDAO;
 import SegundaEntrega.persistencia.AsociadoDTO;
 import SegundaEntrega.persistencia.AsociadoExistenteException;

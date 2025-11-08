@@ -4,9 +4,9 @@ package SegundaEntrega;
 
 import javax.swing.SwingUtilities;
 
-import SegundaEntrega.Patrones.PatronState.GestionLlamados;
 import SegundaEntrega.controlador.ControladorAsociados;
 import SegundaEntrega.controlador.ControladorSimulacion;
+import SegundaEntrega.modelo.Datos.GestionLlamados;
 import SegundaEntrega.vista.IVista;
 import SegundaEntrega.vista.VentanaPestanas;
 

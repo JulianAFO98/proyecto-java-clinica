@@ -6,20 +6,33 @@ public class Asociado implements Runnable {
     private boolean alta;
     private String name;
     private Ambulancia ambulancia;
+    private String estadoAsociado; // Nuevo atributo para el estado del asociado
 
-    public Asociado( String name, int id, String dni, boolean alta, Ambulancia ambulancia) {
+    public Asociado(String name, int id, String dni, boolean alta, Ambulancia ambulancia) {
         this.id = id;
         this.dni = dni;
         this.alta = alta;
         this.name = name;
         this.ambulancia = ambulancia;
+        this.estadoAsociado = "ATENCION_DOMICILIO"; // Estado inicial
     }
 
     @Override
     public void run() {
-        // Lógica que se ejecutará en el hilo
-        ambulancia = new Ambulancia();
         System.out.println("Ejecutando hilo de asociado: " + name);
+        while (ambulancia.isSimulacionActiva()) {
+            try {
+                ambulancia.ejecutarAmbulancia(this); // Ejemplo de llamada a un metodo de Ambulancia
+                Thread.sleep(1000); // Simula trabajo con una pausa
+
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    public String getEstadoAsoociado() {
+        return estadoAsociado;
     }
 
     public void setAmbulancia(Ambulancia ambulancia) {
