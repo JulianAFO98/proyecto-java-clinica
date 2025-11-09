@@ -20,7 +20,7 @@ public class Ambulancia extends Observable {
             System.out.println("Ejecutando ambulancia para el asociado: " + asociado.getName());
             while (ambulanciaEnUso && simulacionActiva) {
                 try {
-                    System.out.println("Ambulancia ocupada, asociado " + asociado.getName() + " esperando...");
+                    notificarCambio("Ambulancia ocupada, asociado " + asociado.getName() + " esperando...");
                     wait();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();

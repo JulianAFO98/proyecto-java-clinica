@@ -31,16 +31,15 @@ public class ControladorAsociados implements ActionListener {
             } catch (AsociadoExistenteException exception) {
                 this.vista.mostrarMensaje("El dni ya existe: "+exception.getDni());
             }
-            this.vista.limpiarCamposAsociado();
 
         } else if (comando.equals(IVista.DAR_BAJA_ASOCIADO)) {
             Asociado asociadoSeleccionado = this.getAsociadoSeleccionado();
             if (asociadoSeleccionado != null) {
                 this.gestion.eliminarAsociado(asociadoSeleccionado);
-                this.vista.limpiarCamposAsociado();
                 this.vista.agregarALogAsociados("Se dio de baja un asociado\n");
             }
         }
+        this.vista.limpiarCamposAsociado();
         actualizarListaAsociados();
     }
 

@@ -261,7 +261,7 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
                     btnCrearAsociado.setEnabled(false);
                 } else {
                     btnDarBajaAsociado.setEnabled(false);
-                    btnCrearAsociado.setEnabled(true);
+                    btnCrearAsociado.setEnabled(false);
                 }
             }
         }
