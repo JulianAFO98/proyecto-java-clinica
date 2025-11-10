@@ -14,7 +14,6 @@ public class Disponible extends Observable implements EstadoAmbulancia {
     @Override
     public void solicitarAtencionDomicilio() {
         ambulancia.notificarCambio("Atendiendo a domicilio");
-        System.out.println("Hola");
         ambulancia.setEstado(new AtendiendoADomicilio(ambulancia));
     }
 

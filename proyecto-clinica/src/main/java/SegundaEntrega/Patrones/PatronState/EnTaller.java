@@ -18,23 +18,17 @@ public class EnTaller extends Observable implements EstadoAmbulancia {
 
     @Override
     public void solicitarTrasladoClinica() {
-        
         ambulancia.notificarCambio("En taller, no se puede trasladar a clinica");
-
     }
 
     @Override
     public void retornoAutomatico() {
-
         ambulancia.notificarCambio("Continua en taller");
-
     }
 
     @Override
     public void solicitarMantenimiento() {
-
         ambulancia.notificarCambio("Mantenimiento completado, regresando del taller");
-
         ambulancia.setEstado(new RegresandoDelTaller(ambulancia));
     }
 }

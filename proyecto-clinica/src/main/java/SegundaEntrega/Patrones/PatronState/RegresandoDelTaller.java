@@ -17,22 +17,18 @@ public class RegresandoDelTaller extends Observable implements EstadoAmbulancia 
 
     @Override
     public void solicitarTrasladoClinica() {
-
         ambulancia.notificarCambio("No puede atender solicitudes mientras regresa del taller");
 
     }
 
     @Override
     public void retornoAutomatico() {
-
         ambulancia.notificarCambio("Ambulancia disponible");
-
         ambulancia.setEstado(new Disponible(ambulancia));
     }
 
     @Override
     public void solicitarMantenimiento() {
-   
         ambulancia.notificarCambio("No puede solicitar mantenimiento mientras regresa del taller");
 
     }
