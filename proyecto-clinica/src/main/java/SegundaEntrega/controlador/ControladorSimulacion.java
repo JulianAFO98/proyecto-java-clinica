@@ -24,9 +24,16 @@ public class ControladorSimulacion implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String comando  = e.getActionCommand();
         if(comando.equals(IVista.EMPEZAR_SIMULACION)){
-            this.gestion.empezarSimulacion();
+            try {
+                int cantidad = Integer.parseInt(this.vista.getCantidad());
+                this.vista.cambiarEstadoInput(false);
+                this.gestion.empezarSimulacion(cantidad);
+            } catch (NumberFormatException exc) {
+                this.vista.mostrarMensaje("Ingrese una cantidad valida");
+            }
         }else if(comando.equals(IVista.FINALIZAR_SIMULACION)){
             this.gestion.finalizarSimulacion();
+            this.vista.cambiarEstadoInput(true);
         }else if(comando.equals(IVista.LLAMAR_OPERARIO)){
             this.gestion.llamarOperario();
         }

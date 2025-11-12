@@ -50,13 +50,16 @@ public class GestionLlamados {
         this.ambulancia.setSimulacionActiva(false);
     }
 
-    public void empezarSimulacion() {
+    public void empezarSimulacion(int cantidadAsociados) {
         ArrayList<Asociado> asociados = (ArrayList<Asociado>) getAsociados();
         this.ambulancia.setSimulacionActiva(true);
-        for (Asociado asociado : asociados) {
-            asociado.setAmbulancia(ambulancia);
-            Thread hiloAsociado = new Thread(asociado);
-            hiloAsociado.start();
+        for (int i=0;i<cantidadAsociados;i++) {
+            Asociado asociado = asociados.get(i);
+            if(asociado.isAlta()){
+                asociado.setAmbulancia(ambulancia);
+                Thread hiloAsociado = new Thread(asociado);
+                hiloAsociado.start();
+            }
         }
     }
 }

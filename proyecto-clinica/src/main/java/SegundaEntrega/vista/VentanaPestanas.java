@@ -34,11 +34,13 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
     public JButton btnDetener;
     public JButton btnOperario;
     public JTextArea logAreaSimulacion;
+    public JTextField campoCantidad;
+    public JLabel textoCantidad;
 
     public VentanaPestanas() {
         setTitle("Gestión de Asociados y Simulación");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+        setSize(800, 600);
         setLocationRelativeTo(null);
 
         // 1. Crear el JTabbedPane
@@ -138,9 +140,15 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         btnIniciar = new JButton("Iniciar Simulacion");
         btnDetener = new JButton("Detener Simulacion");
         btnOperario = new JButton("Llamar Operario");
+        textoCantidad = new JLabel("Cantidad:");
+        campoCantidad = new JTextField();
+        campoCantidad.setColumns(3);
+        campoCantidad.addKeyListener(this);
         panelBotones.add(btnIniciar);
         panelBotones.add(btnDetener);
         panelBotones.add(btnOperario);
+        panelBotones.add(textoCantidad);
+        panelBotones.add(campoCantidad);
         panel.add(panelBotones, BorderLayout.NORTH);
 
         logAreaSimulacion = new JTextArea(10, 40);
@@ -195,23 +203,48 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
     }
 
     @Override
+    public String getCantidad() {
+        return campoCantidad.getText();
+    }
+
+    @Override
     public void keyReleased(KeyEvent e) {
 
-        String nombre = campoNombre.getText().trim();
-        String dni = campoDni.getText().trim();
-        boolean dniEsValido = false;
-        boolean nombreEsValido = !nombre.isEmpty();
-        try {
-            Integer.parseInt(dni);
-            dniEsValido = true;
-        } catch (NumberFormatException ex) {
-            dniEsValido = false;
+        Object source = e.getSource();
+
+        if (source == campoNombre || source == campoDni) {
+            String nombre = campoNombre.getText().trim();
+            String dni = campoDni.getText().trim();
+            boolean nombreEsValido = !nombre.isEmpty();
+            boolean dniEsValido = false;
+
+            try {
+                Integer.parseInt(dni);
+                dniEsValido = true;
+            } catch (NumberFormatException ex) {
+                dniEsValido = false;
+            }
+
+            if (dni.isEmpty()) {
+                dniEsValido = false;
+            }
+
+            this.btnCrearAsociado.setEnabled(dniEsValido && nombreEsValido);
         }
 
-        if (dni.isEmpty()) {
-            dniEsValido = false;
+        if (source == campoCantidad) {
+            String cantidad = campoCantidad.getText().trim();
+            boolean cantidadEsValida = false;
+            try {
+                int valor = Integer.parseInt(cantidad);
+                if (valor > 0) {
+                    cantidadEsValida = true;
+                }
+            } catch (NumberFormatException ex) {
+                cantidadEsValida = false;
+            }
+            this.btnIniciar.setEnabled(cantidadEsValida);
         }
-        this.btnCrearAsociado.setEnabled(dniEsValido && nombreEsValido);
     }
 
     @Override
@@ -221,7 +254,7 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
 
     @Override
     public void agregarALogSimulacion(String s) {
-        this.logAreaSimulacion.append(s+"\n");
+        this.logAreaSimulacion.append(s + "\n");
     }
 
     @Override
@@ -265,6 +298,16 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
                 }
             }
         }
+    }
+
+    @Override
+    public void cambiarEstadoInput(boolean estado) {
+        this.campoDni.setText("");
+        this.campoNombre.setText("");
+        this.btnCrearAsociado.setEnabled(false);
+        this.btnDarBajaAsociado.setEnabled(false);
+        this.campoDni.setEnabled(estado);
+        this.campoNombre.setEnabled(estado);
     }
 
 }

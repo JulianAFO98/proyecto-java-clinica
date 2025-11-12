@@ -11,8 +11,10 @@ public interface IVista {
     void mostrarMensaje(String s);
     String getDni();
     String getNombre();
+    String getCantidad();
     void agregarALogAsociados(String s);
     void agregarALogSimulacion(String s);
+    void cambiarEstadoInput(boolean estado);
     void actualizarListas(List<Asociado> asociados);
     void limpiarCamposAsociado();
     Asociado getAsociadoSeleccionado();
