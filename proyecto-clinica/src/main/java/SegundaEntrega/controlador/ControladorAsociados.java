@@ -2,7 +2,6 @@ package SegundaEntrega.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import SegundaEntrega.persistencia.AsociadoExistenteException;
 import SegundaEntrega.vista.IVista;
@@ -17,6 +16,7 @@ public class ControladorAsociados implements ActionListener {
         this.vista = vista;
         this.gestion = gestion;
         this.vista.addActionListenerAsociado(this);
+        this.vista.actualizarListas(this.gestion.getAsociados());
     }
 
     @Override
@@ -33,29 +33,17 @@ public class ControladorAsociados implements ActionListener {
             }
 
         } else if (comando.equals(IVista.DAR_BAJA_ASOCIADO)) {
-            Asociado asociadoSeleccionado = this.getAsociadoSeleccionado();
+            Asociado asociadoSeleccionado = this.vista.getAsociadoSeleccionado();
             if (asociadoSeleccionado != null) {
                 this.gestion.eliminarAsociado(asociadoSeleccionado);
                 this.vista.agregarALogAsociados("Se dio de baja un asociado\n");
             }
         }
         this.vista.limpiarCamposAsociado();
-        actualizarListaAsociados();
+        this.vista.actualizarListas(this.gestion.getAsociados());
     }
 
-    public void actualizarListaAsociados() {
-        ArrayList<Asociado> asociadoDeAlta = new ArrayList<>();
-        for (Asociado asociado : this.gestion.getAsociados()) {
-            if (asociado.isAlta()) {
-                asociadoDeAlta.add(asociado);
-            }
-        }
+    
 
-        this.vista.actualizarListas(asociadoDeAlta);
-    }
-
-    public Asociado getAsociadoSeleccionado() {
-        return this.vista.getAsociadoSeleccionado();
-    }
-
+    
 }

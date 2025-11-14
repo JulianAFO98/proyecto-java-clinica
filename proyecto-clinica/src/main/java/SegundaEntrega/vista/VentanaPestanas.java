@@ -36,6 +36,8 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
     public JTextArea logAreaSimulacion;
     public JTextField campoCantidad;
     public JLabel textoCantidad;
+    public JTextField campoIteracion;
+    public JLabel textoIteraciones;
 
     public VentanaPestanas() {
         setTitle("Gestión de Asociados y Simulación");
@@ -56,9 +58,10 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
 
         // 4. Agregar el JTabbedPane a la ventana principal
         add(tabbedPane);
-
         setVisible(true);
     }
+
+    
 
     // --- Método para crear el Panel Asociados ---
     private JPanel crearPanelAsociados() {
@@ -140,15 +143,21 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         btnIniciar = new JButton("Iniciar Simulacion");
         btnDetener = new JButton("Detener Simulacion");
         btnOperario = new JButton("Llamar Operario");
-        textoCantidad = new JLabel("Cantidad:");
+        textoCantidad = new JLabel("Asociados:");
         campoCantidad = new JTextField();
         campoCantidad.setColumns(3);
         campoCantidad.addKeyListener(this);
+        textoIteraciones = new JLabel("Iteraciones:");
+        campoIteracion = new JTextField();
+        campoIteracion.setColumns(3);
+        campoIteracion.addKeyListener(this);
         panelBotones.add(btnIniciar);
         panelBotones.add(btnDetener);
         panelBotones.add(btnOperario);
         panelBotones.add(textoCantidad);
         panelBotones.add(campoCantidad);
+        panelBotones.add(textoIteraciones);
+        panelBotones.add(campoIteracion);
         panel.add(panelBotones, BorderLayout.NORTH);
 
         logAreaSimulacion = new JTextArea(10, 40);
@@ -232,18 +241,20 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
             this.btnCrearAsociado.setEnabled(dniEsValido && nombreEsValido);
         }
 
-        if (source == campoCantidad) {
+        if (source == campoCantidad || source == campoIteracion) {
             String cantidad = campoCantidad.getText().trim();
-            boolean cantidadEsValida = false;
+            String iteracion = campoIteracion.getText().trim();
+            boolean inputValido = false;
             try {
                 int valor = Integer.parseInt(cantidad);
-                if (valor > 0) {
-                    cantidadEsValida = true;
+                int iter = Integer.parseInt(iteracion);
+                if (valor > 0 && iter > 0) {
+                    inputValido = true;
                 }
             } catch (NumberFormatException ex) {
-                cantidadEsValida = false;
+                inputValido = false;
             }
-            this.btnIniciar.setEnabled(cantidadEsValida);
+            this.btnIniciar.setEnabled(inputValido);
         }
     }
 
@@ -276,6 +287,8 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
 
     }
 
+    
+
     public void limpiarCamposAsociado() {
         campoNombre.setText("");
         campoDni.setText("");
@@ -288,7 +301,6 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         if (e.getSource() == listaAsociados) {
             if (!e.getValueIsAdjusting()) {
                 Asociado seleccionado = listaAsociados.getSelectedValue();
-                System.out.println("Seleccionado: " + seleccionado);
                 if (seleccionado != null) {
                     btnDarBajaAsociado.setEnabled(true);
                     btnCrearAsociado.setEnabled(false);
@@ -308,6 +320,11 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         this.btnDarBajaAsociado.setEnabled(false);
         this.campoDni.setEnabled(estado);
         this.campoNombre.setEnabled(estado);
+    }
+
+    @Override
+    public String getIteracion() {
+        return campoIteracion.getText();
     }
 
 }

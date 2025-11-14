@@ -12,6 +12,7 @@ public interface IVista {
     String getDni();
     String getNombre();
     String getCantidad();
+    String getIteracion();
     void agregarALogAsociados(String s);
     void agregarALogSimulacion(String s);
     void cambiarEstadoInput(boolean estado);

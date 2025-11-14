@@ -5,7 +5,14 @@ public class AsociadoDTO {
     private String dni;
     private boolean alta;
     private String nombre;
-    public AsociadoDTO(String dni, boolean alta, String nombre) {
+
+    public AsociadoDTO(int id,String dni, boolean alta, String nombre) {
+        this.id = id;
+        this.dni = dni;
+        this.alta = alta;
+        this.nombre = nombre;
+    }
+     public AsociadoDTO(String dni, boolean alta, String nombre) {
         this.dni = dni;
         this.alta = alta;
         this.nombre = nombre;

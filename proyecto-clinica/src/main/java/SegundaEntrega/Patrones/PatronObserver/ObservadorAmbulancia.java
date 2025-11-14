@@ -3,17 +3,17 @@ package SegundaEntrega.Patrones.PatronObserver;
 import java.util.Observable;
 import java.util.Observer;
 
-import SegundaEntrega.controlador.ControladorSimulacion;
 import SegundaEntrega.modelo.Datos.Ambulancia;
+import SegundaEntrega.vista.IVista;
 
 public class ObservadorAmbulancia implements Observer {
     private Observable ambulancia;
-    private ControladorSimulacion controladorSimulacion;
+    private IVista vista;
 
-    public ObservadorAmbulancia(Ambulancia ambulancia, ControladorSimulacion controladorSimulacion) {
+    public ObservadorAmbulancia(Ambulancia ambulancia, IVista vista) {
         this.ambulancia = ambulancia;
         this.ambulancia.addObserver(this);
-        this.controladorSimulacion = controladorSimulacion;
+        this.vista = vista;
     }
 
     @Override
@@ -22,6 +22,6 @@ public class ObservadorAmbulancia implements Observer {
             throw new IllegalArgumentException();
         Ambulancia ambulancia = (Ambulancia) o;
         String mensaje = (String) arg;
-        this.controladorSimulacion.agregarALogSimulacion(mensaje);
+        this.vista.agregarALogSimulacion(mensaje);
     }
 }

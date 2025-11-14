@@ -6,7 +6,7 @@ import java.util.List;
 import SegundaEntrega.persistencia.AsociadoDAO;
 import SegundaEntrega.persistencia.AsociadoDTO;
 import SegundaEntrega.persistencia.AsociadoExistenteException;
-import SegundaEntrega.persistencia.PersistenciaAsociado;
+import SegundaEntrega.persistencia.PersistenciaDatabase;
 import SegundaEntrega.utils.Utils;
 
 /*
@@ -19,7 +19,7 @@ public class GestionLlamados {
     public GestionLlamados(Ambulancia a) {
         this.ambulancia = a;
         this.ope = new Operario(a);
-        this.asociadoDao = new PersistenciaAsociado();
+        this.asociadoDao = new PersistenciaDatabase();
     }
 
     public void agregarAsociado(String nombre, String dni) throws AsociadoExistenteException {
@@ -35,27 +35,36 @@ public class GestionLlamados {
     public List<Asociado> getAsociados() {
         List<AsociadoDTO> asociadosDTO = asociadoDao.getAllAsociados();
         List<Asociado> asociados = Utils.fromDTOtoClass(asociadosDTO);
-        return asociados;
+        List<Asociado> asociadoDeAlta = new ArrayList<>();
+         for (Asociado asociado : asociados) {
+            if (asociado.isAlta()) {
+                asociadoDeAlta.add(asociado);
+            }
+        }
+        return asociadoDeAlta;
     }
 
     public void eliminarAsociado(Asociado asociadoSeleccionado) {
+        System.out.println("Eliminando asociado: " + asociadoSeleccionado.getId());
         asociadoDao.darDeBajaAsociado(asociadoSeleccionado.getId());
     }
 
     public void llamarOperario() {
-        this.ope.run();
+        Thread hiloOperario = new Thread(this.ope);
+        hiloOperario.start();
     }
 
     public void finalizarSimulacion() {
         this.ambulancia.setSimulacionActiva(false);
     }
 
-    public void empezarSimulacion(int cantidadAsociados) {
+    public void empezarSimulacion(int cantidadAsociados, int iteraciones) {
         ArrayList<Asociado> asociados = (ArrayList<Asociado>) getAsociados();
         this.ambulancia.setSimulacionActiva(true);
         for (int i=0;i<cantidadAsociados;i++) {
             Asociado asociado = asociados.get(i);
             if(asociado.isAlta()){
+                asociado.setCantidadAtenciones(iteraciones);
                 asociado.setAmbulancia(ambulancia);
                 Thread hiloAsociado = new Thread(asociado);
                 hiloAsociado.start();

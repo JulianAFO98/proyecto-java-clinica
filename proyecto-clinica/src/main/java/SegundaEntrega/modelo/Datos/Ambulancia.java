@@ -18,7 +18,6 @@ public class Ambulancia extends Observable {
     public synchronized void ejecutarAmbulancia(Asociado asociado) {
         // Accion concurrente de la ambulancia
         if (simulacionActiva) {
-            System.out.println("Ejecutando ambulancia para el asociado: " + asociado.getName());
             while ((ambulanciaEnUso || solicitaOperario) && simulacionActiva) {
                 try {
                     notificarCambio("Ambulancia ocupada, asociado " + asociado.getName() + " esperando...");

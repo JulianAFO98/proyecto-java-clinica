@@ -32,7 +32,7 @@ public class PersistenciaAsociado implements AsociadoDAO {
     }
 
     @Override
-    public void darDeBajaAsociado(long id) {
+    public void darDeBajaAsociado(int id) {
         for (AsociadoDTO asociadoDTO : asociados) {
             if (asociadoDTO.getId() == id) {
                 asociadoDTO.setAlta(false);
