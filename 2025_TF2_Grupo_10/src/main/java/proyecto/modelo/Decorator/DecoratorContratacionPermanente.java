@@ -5,14 +5,12 @@ import proyecto.modelo.interfaces.IMedico;
  * Clase que extiende de DecoratorContratacion y representa un decorador
  * para la contratacion permanente de medicos.
  * Aplica un aumento del 10% al sueldo calculado del medico.
- * 
- */
+ * */
 public class DecoratorContratacionPermanente extends DecoratorContratacion {
 
 	/**
 	 * Constructor que recibe un objeto IMedico para ser decorado.
-	 * 
-	 * @param medico El medico a ser decorado.
+	 * * @param medico El medico a ser decorado.
 	 */
 	public DecoratorContratacionPermanente(IMedico medico) {
 		super(medico);
@@ -24,9 +22,17 @@ public class DecoratorContratacionPermanente extends DecoratorContratacion {
 	 */
 	@Override
 	public double calcularSueldo() {
-		double aux = this.encapsulado.calcularSueldo();
-		aux *= 1.1;
-		return aux;
+        assert this.encapsulado != null : "El medico encapsulado no puede ser nulo para calcular el sueldo.";
+        
+		double sueldoPreAumento = this.encapsulado.calcularSueldo();
+        assert sueldoPreAumento >= 0 : "El sueldo base del encapsulado no puede ser negativo.";
+        
+		double sueldoFinal = sueldoPreAumento * 1.1;
+        
+        assert sueldoFinal >= sueldoPreAumento : "El sueldo final debe ser mayor o igual al sueldo base.";
+        assert Math.abs(sueldoFinal - (sueldoPreAumento * 1.1)) < 0.0001 : "El sueldo final debe ser el sueldo base mas un 10%.";
+        
+		return sueldoFinal;
 	}
 	
 }

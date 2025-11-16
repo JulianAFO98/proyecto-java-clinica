@@ -20,22 +20,33 @@ public  class Conexion {
      * Obtiene una conexion activa hacia la base de datos de la aplicacion.
      *
      * @return conexion JDBC lista para usarse
+     * <br>Pre: Las constantes de conexion (DRIVER, URL, USER, PASS) son validas.
+     * <br>Post: Retorna un objeto Connection no nulo y abierto.
      * @throws SQLException si falla la carga del driver o la autenticacion
      */
     public static Connection obtenerConexion() throws SQLException {
+        Connection conn = null;
         try {
             Class.forName(JDBC_DRIVER); 
         } catch (ClassNotFoundException e) {
+            // Postcondicion de falla: se lanza SQLException
             throw new SQLException("Error al cargar el driver JDBC: " + e.getMessage(), e);
         }
-        return DriverManager.getConnection(DB_URL, USER, PASS);
+        conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        
+        // Postcondicion de exito
+        assert conn != null : "La conexion obtenida no debe ser nula.";
+        assert !conn.isClosed() : "La conexion obtenida debe estar abierta.";
+        
+        return conn;
     }
     
     /**
      * Crea la base de datos utilizando credenciales de root.
      * Se conecta al servidor sin especificar base de datos y ejecuta el comando CREATE DATABASE IF NOT EXISTS.
-     * 
-     * @throws SQLException si ocurre un error al crear la base de datos
+     * * @throws SQLException si ocurre un error al crear la base de datos
+     * <br>Pre: Las credenciales de ROOT son correctas y el servidor esta disponible.
+     * <br>Post: La base de datos DB_NAME existe en el servidor.
      */
     public static void crearBaseDatos() throws SQLException {
         String rootUrl = "jdbc:mariadb://localhost:3306/";
@@ -45,6 +56,10 @@ public  class Conexion {
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(rootUrl, ROOT_USER, ROOT_PASS);
+            
+            // Invariante: La conexion de root no debe ser nula
+            assert conn != null : "La conexion de root no debe ser nula.";
+
             stmt = conn.createStatement();
             stmt.executeUpdate(createDatabaseSQL);
             System.out.println("Base de datos '" + DB_NAME + "' creada exitosamente.");
@@ -53,14 +68,14 @@ public  class Conexion {
         } finally {
             cerrarRecursos(null, stmt, conn);
         }
-        
     }
     
     /**
      * Crea el usuario si no existe con permisos en la base de datos.
      * Utiliza credenciales de root para crear el usuario 'progra_c' con contraseña 'progra_c'.
-     * 
-     * @throws SQLException si ocurre un error al crear el usuario
+     * * @throws SQLException si ocurre un error al crear el usuario
+     * <br>Pre: Las credenciales de ROOT son correctas y el servidor esta disponible.
+     * <br>Post: El usuario USER existe y tiene privilegios en la base de datos DB_NAME.
      */
     public static void crearUsuario() throws SQLException {
         String rootUrl = "jdbc:mariadb://localhost:3306/";
@@ -73,6 +88,10 @@ public  class Conexion {
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(rootUrl, ROOT_USER, ROOT_PASS);
+            
+            // Invariante: La conexion de root no debe ser nula
+            assert conn != null : "La conexion de root no debe ser nula.";
+
             stmt = conn.createStatement();
             
             stmt.executeUpdate(createUserSQL);
@@ -93,8 +112,9 @@ public  class Conexion {
     /**
      * Limpia todos los datos de la tabla asociados y la recrear.
      * Si la tabla existe, la elimina y luego crea una nueva con la estructura requerida.
-     * 
-     * @throws SQLException si ocurre un error al limpiar o crear la tabla
+     * * @throws SQLException si ocurre un error al limpiar o crear la tabla
+     * <br>Pre: La base de datos y el usuario de la aplicacion deben existir.
+     * <br>Post: La tabla 'asociados' existe y esta vacia, con la estructura correcta.
      */
     public static void limpiarYCrearTabla() throws SQLException {
         Connection conn = null;
@@ -102,12 +122,14 @@ public  class Conexion {
         
         try {
             conn = Conexion.obtenerConexion();
+            // Invariante: Conexion obtenida
+            assert conn != null && !conn.isClosed() : "La conexion debe ser valida y estar abierta.";
+
             stmt = conn.createStatement();
             
             // Eliminar la tabla si existe
             String dropTableSQL = "DROP TABLE IF EXISTS asociados;";
             stmt.executeUpdate(dropTableSQL);
-            System.out.println("Tabla 'asociados' eliminada (si existía).");
             
             // Crear la tabla con la estructura requerida
             String createTableSQL = "CREATE TABLE asociados (" +
@@ -129,8 +151,9 @@ public  class Conexion {
     
     /**
      * Inserta 3 asociados de prueba en la tabla asociados.
-     * 
-     * @throws SQLException si ocurre un error al insertar los asociados
+     * * @throws SQLException si ocurre un error al insertar los asociados
+     * <br>Pre: La tabla 'asociados' debe existir.
+     * <br>Post: Se insertan exactamente 3 registros nuevos en la tabla 'asociados'.
      */
     public static void insertarAsociados() throws SQLException {
         Connection conn = null;
@@ -139,26 +162,33 @@ public  class Conexion {
         
         try {
             conn = obtenerConexion();
+            // Invariante: Conexion obtenida
+            assert conn != null && !conn.isClosed() : "La conexion debe ser valida y estar abierta.";
+
             ps = conn.prepareStatement(sql);
+            int rowsAffected = 0;
             
             // Primer asociado
-            ps.setString(1, "Juan Pérez");
+            ps.setString(1, "Juan Perez");
             ps.setString(2, "12345678A");
             ps.setBoolean(3, true);
-            ps.executeUpdate();
+            rowsAffected += ps.executeUpdate();
             
             // Segundo asociado
-            ps.setString(1, "María García");
+            ps.setString(1, "Maria Garcia");
             ps.setString(2, "87654321B");
             ps.setBoolean(3, true);
-            ps.executeUpdate();
+            rowsAffected += ps.executeUpdate();
             
             // Tercer asociado
-            ps.setString(1, "Carlos López");
+            ps.setString(1, "Carlos Lopez");
             ps.setString(2, "11223344C");
             ps.setBoolean(3, true);
-            ps.executeUpdate();
+            rowsAffected += ps.executeUpdate();
             
+            // Postcondicion
+            assert rowsAffected == 3 : "Se esperaba insertar exactamente 3 asociados.";
+
             System.out.println("3 asociados insertados exitosamente.");
             
         } catch (SQLException e) {
@@ -173,10 +203,18 @@ public  class Conexion {
      * Cierra silenciosamente los recursos JDBC utilizados en las operaciones.
      *
      * @param rs conjunto de resultados a cerrar
+     * <br>Pre: No aplica
+     * <br>Post: Si rs != null y esta abierto, se cierra sin lanzar excepcion.
      * @param stmt sentencia ejecutada
+     * <br>Pre: No aplica
+     * <br>Post: Si stmt != null y esta abierto, se cierra sin lanzar excepcion.
      * @param conn conexion a liberar
+     * <br>Pre: No aplica
+     * <br>Post: Si conn != null y esta abierto, se cierra sin lanzar excepcion.
      */
     public static void cerrarRecursos(ResultSet rs, Statement stmt, Connection conn) {
+        // No se pueden usar asserts para garantizar el cierre, ya que es una operacion silenciosa (try/catch).
+
         try {
             if (rs != null) rs.close();
         } catch (SQLException e) {

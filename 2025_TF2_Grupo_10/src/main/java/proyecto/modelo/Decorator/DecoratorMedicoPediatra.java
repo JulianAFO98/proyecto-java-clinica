@@ -12,21 +12,33 @@ public class DecoratorMedicoPediatra  extends DecoratorMedico{
      * @param medico medico a decorar
      */ 
     public DecoratorMedicoPediatra(IMedico medico) {
-    	super(medico);
+    	super(medico); // La precondicion (medico != null) se verifica en el constructor de la superclase
 	}
+    
     @Override
 	public String getEspecialidad() {
-		return "Pediatra";
+		assert this.encapsulado != null : "El medico encapsulado no debe ser nulo.";
+        String especialidad = "Pediatra";
+        assert especialidad.equals("Pediatra") : "La especialidad debe ser 'Pediatra'.";
+		return especialidad;
 	}
 
     /**
-     * Calcula el sueldo del médico pediatra, aplicando un incremento del 7% al sueldo base.
-     * @return El sueldo calculado del médico pediatra.
+     * Calcula el sueldo del medico pediatra, aplicando un incremento del 7% al sueldo base.
+     * @return El sueldo calculado del medico pediatra.
      */
     @Override
     public double calcularSueldo() {
-        double aux = this.encapsulado.calcularSueldo();
-        return aux*1.07;
+        assert this.encapsulado != null : "El medico encapsulado no puede ser nulo para calcular el sueldo.";
+        
+        double sueldoPreAumento = this.encapsulado.calcularSueldo();
+        assert sueldoPreAumento >= 0 : "El sueldo base del encapsulado no puede ser negativo.";
+        
+        double sueldoFinal = sueldoPreAumento * 1.07;
+        
+        assert sueldoFinal >= sueldoPreAumento : "El sueldo final debe ser mayor o igual al sueldo base.";
+        assert Math.abs(sueldoFinal - (sueldoPreAumento * 1.07)) < 0.0001 : "El sueldo final debe ser el sueldo base mas un 7%.";
+        
+        return sueldoFinal;
     }
 }
-

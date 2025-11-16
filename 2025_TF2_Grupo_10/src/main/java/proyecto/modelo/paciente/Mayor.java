@@ -11,30 +11,37 @@ public class Mayor extends Paciente{
 	}
 	
 	/**
-	 * Implementa el mecanismo de Double Dispatch para determinar qué paciente
-	 * tiene prioridad en la asignación de sala frente a otro paciente.
+	 * Implementa el mecanismo de Double Dispatch para determinar que paciente
+	 * tiene prioridad en la asignacion de sala frente a otro paciente.
 	 *
-	 * <p>Este metodo delega la comparación al metodo prioridadCon del
+	 * <p>Este metodo delega la comparacion al metodo prioridadCon del
 	 * otro paciente, permitiendo que el resultado dependa dinamicamente
-	 * del tipo concreto de ambos objetos en tiempo de ejecución.</p>
+	 * del tipo concreto de ambos objetos en tiempo de ejecucion.</p>
 	 *
 	 * @param otro el otro paciente con el cual se compara la prioridad de sala.
 	 * @return el paciente que tiene prioridad (entre this y otro).
 	 *
 	 * <br>Pre: otro != null
-	 * <br>Post: se retorna una referencia válida a un objeto Paciente
-	 *       que representa al paciente con mayor prioridad.
+	 * <br>Post: se retorna una referencia valida a un objeto Paciente
+	 * que representa al paciente con mayor prioridad.
 	 * <br>Post: no se modifica el estado interno de ninguno de los objetos.
 	 */
 	@Override
 	public Paciente decidirSala(Paciente otro)
 	{
-	    return otro.prioridadCon(this);
+	    assert otro != null : "El paciente otro no debe ser nulo.";
+	    
+	    Paciente resultado = otro.prioridadCon(this);
+	    
+	    assert resultado != null : "El resultado de la decision de sala no puede ser nulo.";
+	    assert resultado == this || resultado == otro : "El paciente con prioridad debe ser uno de los dos pacientes comparados.";
+	    
+	    return resultado;
 	}
 
 	/**
 	 * Define la prioridad entre un paciente del tipo Nino y este paciente.
-	 * En este caso, el paciente actual (this) tiene prioridad sobre el niño.
+	 * En este caso, el paciente actual (this) tiene prioridad sobre el nino.
 	 *
 	 * @param n el paciente de tipo Nino a comparar.
 	 * @return this, indicando que el paciente actual tiene prioridad.
@@ -46,7 +53,13 @@ public class Mayor extends Paciente{
 	@Override
 	public Paciente prioridadCon(Nino n)
 	{
-	    return this;
+	    assert n != null : "El paciente Nino no debe ser nulo.";
+	    
+	    Paciente resultado = this;
+	    
+	    assert resultado == this : "El resultado debe ser el paciente actual (this).";
+	    
+	    return resultado;
 	}
 
 	/**
@@ -63,7 +76,13 @@ public class Mayor extends Paciente{
 	@Override
 	public Paciente prioridadCon(Joven j)
 	{
-	    return j;
+	    assert j != null : "El paciente Joven no debe ser nulo.";
+	    
+	    Paciente resultado = j;
+	    
+	    assert resultado == j : "El resultado debe ser el paciente Joven.";
+	    
+	    return resultado;
 	}
 
 	/**
@@ -80,6 +99,12 @@ public class Mayor extends Paciente{
 	@Override
 	public Paciente prioridadCon(Mayor m)
 	{
-	    return this;
+	    assert m != null : "El paciente Mayor no debe ser nulo.";
+	    
+	    Paciente resultado = this;
+	    
+	    assert resultado == this : "El resultado debe ser el paciente actual (this).";
+	    
+	    return resultado;
 	}
 }
