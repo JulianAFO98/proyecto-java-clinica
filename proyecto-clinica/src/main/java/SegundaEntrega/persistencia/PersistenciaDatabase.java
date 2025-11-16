@@ -7,44 +7,7 @@ import java.util.ArrayList;
 
 public class PersistenciaDatabase implements AsociadoDAO {
 
-    private static final String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mariadb://localhost:3306/Grupo_10";
-    private static final String USER = "progra_c";
-    private static final String PASS = "progra_c";
-
-
-  
-    private Connection obtenerConexion() throws SQLException {
-        try {
-            Class.forName(JDBC_DRIVER); 
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("Error al cargar el driver JDBC: " + e.getMessage(), e);
-        }
-        return DriverManager.getConnection(DB_URL, USER, PASS);
-    }
     
-   
-    private void cerrarRecursos(ResultSet rs, Statement stmt, Connection conn) {
-        try {
-            if (rs != null) rs.close();
-        } catch (SQLException e) {
-            System.out.println("Error al cerrar ResultSet: " + e.getMessage());
-        }
-
-        try {
-            if (stmt != null) stmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error al cerrar Statement: " + e.getMessage());
-        }
-
-        try {
-            if (conn != null) conn.close();
-        } catch (SQLException e) {
-            System.out.println("Error al cerrar Connection: " + e.getMessage());
-        }
-    }
-
-
     @Override
     public AsociadoDTO getAsociadobyDNI(String dni) {
         Connection conn = null;
@@ -54,7 +17,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         String sql = "SELECT nombre, alta, dni FROM asociados WHERE dni = ?";
 
         try {
-            conn = obtenerConexion(); 
+            conn = Conexion.obtenerConexion(); 
             ps = conn.prepareStatement(sql); 
             ps.setString(1, dni);
 
@@ -70,7 +33,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         } catch (SQLException e) {
             System.out.println("Error al consultar el asociado: " + e.getMessage());
         } finally {
-            cerrarRecursos(resultado, ps, conn); 
+            Conexion.cerrarRecursos(resultado, ps, conn); 
         }
         return asociado;
     }
@@ -85,7 +48,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         String sql = "SELECT * FROM asociados";
 
         try {
-            conn = obtenerConexion();
+            conn = Conexion.obtenerConexion();
             sentencia = conn.createStatement();
             resultado = sentencia.executeQuery(sql);
 
@@ -94,14 +57,14 @@ public class PersistenciaDatabase implements AsociadoDAO {
                 boolean alta = resultado.getBoolean("alta");
                 String dni = resultado.getString("dni");
                 int id = resultado.getInt("id");
-                AsociadoDTO asociado = new AsociadoDTO(id,nombre, alta, dni);
+                AsociadoDTO asociado = new AsociadoDTO(id,dni, alta, nombre);
                 listaAsociados.add(asociado);
             }
 
         } catch (SQLException e) {
             System.out.println("Error al consultar todos los asociados: " + e.getMessage());
         } finally {
-            cerrarRecursos(resultado, sentencia, conn);
+            Conexion.cerrarRecursos(resultado, sentencia, conn);
         }
         return listaAsociados;
     }
@@ -114,7 +77,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         String sql = "INSERT INTO asociados (nombre, dni, alta) VALUES (?, ?, ?)";
         
         try {
-            conn = obtenerConexion();
+            conn = Conexion.obtenerConexion();
             ps = conn.prepareStatement(sql);
 
             ps.setString(1, asociado.getNombre());
@@ -126,7 +89,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
             System.out.println("Error al insertar datos: " + e.getMessage());
             return null;
         } finally {
-            cerrarRecursos(null, ps, conn); 
+            Conexion.cerrarRecursos(null, ps, conn); 
         }
         return asociado;
     }
@@ -139,7 +102,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         String sql = "DELETE FROM asociados WHERE id = ?"; 
 
         try {
-            conn = obtenerConexion();
+            conn = Conexion.obtenerConexion();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
@@ -147,7 +110,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         } catch (SQLException e) {
             System.out.println("Error al dar de baja al asociado: " + e.getMessage());
         } finally {
-            cerrarRecursos(null, ps, conn); 
+            Conexion.cerrarRecursos(null, ps, conn); 
         }
     }
 }
