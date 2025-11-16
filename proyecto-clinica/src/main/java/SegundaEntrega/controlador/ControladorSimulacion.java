@@ -39,7 +39,7 @@ public class ControladorSimulacion implements ActionListener{
             this.gestion.llamarOperario();
         }
     }
-
+    //borrar despues
     public void agregarALogSimulacion(String s){
         this.vista.agregarALogSimulacion(s);
     }
