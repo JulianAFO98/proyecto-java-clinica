@@ -6,8 +6,17 @@ import java.util.List;
 import SegundaEntrega.modelo.Datos.Asociado;
 import SegundaEntrega.persistencia.AsociadoDTO;
 
+/**
+ * Funciones utilitarias para conversiones entre capas.
+ */
 public class Utils {
 
+    /**
+     * Convierte dtos de asociados en objetos de dominio basicos.
+     *
+     * @param lista coleccion de dtos provenientes de persistencia
+     * @return lista de entidades Asociado con los datos del dto
+     */
     public static List<Asociado> fromDTOtoClass(List<AsociadoDTO> lista){
         List<Asociado> asociados = new ArrayList<>();
         

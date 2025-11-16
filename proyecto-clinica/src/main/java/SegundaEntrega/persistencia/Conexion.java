@@ -2,6 +2,9 @@ package SegundaEntrega.persistencia;
 import java.sql.*;
 
 
+/**
+ * Gestiona las conexiones con MariaDB y las tareas de inicializacion del esquema.
+ */
 public  class Conexion {
     
     private static final String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
@@ -13,6 +16,12 @@ public  class Conexion {
     private static final String ROOT_PASS = "root";
     private static final String DB_NAME = "Grupo_10";
 
+    /**
+     * Obtiene una conexion activa hacia la base de datos de la aplicacion.
+     *
+     * @return conexion JDBC lista para usarse
+     * @throws SQLException si falla la carga del driver o la autenticacion
+     */
     public static Connection obtenerConexion() throws SQLException {
         try {
             Class.forName(JDBC_DRIVER); 
@@ -160,6 +169,13 @@ public  class Conexion {
         }
     }
    
+    /**
+     * Cierra silenciosamente los recursos JDBC utilizados en las operaciones.
+     *
+     * @param rs conjunto de resultados a cerrar
+     * @param stmt sentencia ejecutada
+     * @param conn conexion a liberar
+     */
     public static void cerrarRecursos(ResultSet rs, Statement stmt, Connection conn) {
         try {
             if (rs != null) rs.close();

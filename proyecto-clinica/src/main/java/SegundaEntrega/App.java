@@ -14,6 +14,7 @@ import SegundaEntrega.vista.IVista;
 import SegundaEntrega.vista.VentanaPestanas;
 
 public class App {
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {

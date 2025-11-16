@@ -6,20 +6,30 @@ import java.awt.event.ActionListener;
 import SegundaEntrega.modelo.Datos.GestionLlamados;
 import SegundaEntrega.vista.IVista;
 
+/**
+ * Gestiona los comandos relacionados con la simulacion de llamados.
+ */
 public class ControladorSimulacion implements ActionListener{
     private IVista vista;
     private GestionLlamados gestion;
 
-    
-
+    /**
+     * Vincula la vista con la gestion de llamados para la simulacion.
+     *
+     * @param vista referencia a la interfaz que dispara eventos
+     * @param gestion componente que ejecuta la logica de simulacion
+     */
     public ControladorSimulacion(IVista vista, GestionLlamados gestion) {
         this.vista = vista;
         this.gestion = gestion;
         this.vista.addActionListenerSimulacion(this);
     }
 
-
-
+    /**
+     * Atiende los eventos de la vista y delega en la gestion correspondiente.
+     *
+     * @param e evento emitido por los controles de simulacion
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String comando  = e.getActionCommand();

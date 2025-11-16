@@ -8,10 +8,19 @@ import SegundaEntrega.vista.IVista;
 import SegundaEntrega.modelo.Datos.Asociado;
 import SegundaEntrega.modelo.Datos.GestionLlamados;
 
+/**
+ * Coordina las acciones sobre asociados y actualiza la interfaz grafica.
+ */
 public class ControladorAsociados implements ActionListener {
     private IVista vista;
     private GestionLlamados gestion;
 
+    /**
+     * Registra la vista y prepara la gestion de asociados.
+     *
+     * @param vista referencia a la interfaz donde se muestran los datos
+     * @param gestion fachada que administra asociados y sus operaciones
+     */
     public ControladorAsociados(IVista vista, GestionLlamados gestion) {
         this.vista = vista;
         this.gestion = gestion;
@@ -19,6 +28,11 @@ public class ControladorAsociados implements ActionListener {
         this.vista.actualizarListas(this.gestion.getAsociados());
     }
 
+    /**
+     * Procesa los eventos de la vista de asociados.
+     *
+     * @param e evento generado por la interfaz grafica
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();

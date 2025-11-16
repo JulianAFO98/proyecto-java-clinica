@@ -5,9 +5,18 @@ import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Implementacion de acceso a datos utilizando JDBC y MariaDB.
+ */
 public class PersistenciaDatabase implements AsociadoDAO {
 
     
+    /**
+     * Busca un asociado por su dni dentro de la tabla.
+     *
+     * @param dni identificador a consultar
+     * @return dto del asociado encontrado o null si no existe
+     */
     @Override
     public AsociadoDTO getAsociadobyDNI(String dni) {
         Connection conn = null;
@@ -39,6 +48,11 @@ public class PersistenciaDatabase implements AsociadoDAO {
     }
 
 
+    /**
+     * Recupera todos los asociados registrados.
+     *
+     * @return lista completa de asociados DTO
+     */
     @Override
     public List<AsociadoDTO> getAllAsociados() {
         Connection conn = null;
@@ -70,6 +84,12 @@ public class PersistenciaDatabase implements AsociadoDAO {
     }
 
     
+    /**
+     * Persiste un asociado y devuelve el objeto utilizado en la insercion.
+     *
+     * @param asociado dto con los datos a guardar
+     * @return mismo objeto dto si la insercion fue exitosa o null si fallo
+     */
     @Override
     public AsociadoDTO createAsociado(AsociadoDTO asociado) {
         Connection conn = null;
@@ -95,6 +115,11 @@ public class PersistenciaDatabase implements AsociadoDAO {
     }
 
 
+    /**
+     * Elimina un asociado por identificador primario.
+     *
+     * @param id clave del registro a eliminar
+     */
     @Override
     public void darDeBajaAsociado(int id) {
         Connection conn = null;

@@ -13,6 +13,9 @@ import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * Ventana principal dividida en pestanas para administrar asociados y simular llamados.
+ */
 public class VentanaPestanas extends JFrame implements IVista, KeyListener, ListSelectionListener {
 
     // --- Atributos de Instancia (Componentes Accesibles) ---
@@ -39,6 +42,9 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
     public JTextField campoIteracion;
     public JLabel textoIteraciones;
 
+    /**
+     * Construye la ventana configurando ambas pestanas y sus componentes.
+     */
     public VentanaPestanas() {
         setTitle("Gestión de Asociados y Simulación");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,6 +70,11 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
     
 
     // --- Método para crear el Panel Asociados ---
+    /**
+     * Crea el panel de administracion de asociados.
+     *
+     * @return panel configurado con formulario, lista y log
+     */
     private JPanel crearPanelAsociados() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
 
@@ -136,6 +147,11 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         return panel;
     }
 
+    /**
+     * Crea el panel de simulacion con sus controles y log.
+     *
+     * @return panel configurado para la simulacion
+     */
     private JPanel crearPanelSimulacion() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
 
@@ -216,6 +232,11 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         return campoCantidad.getText();
     }
 
+    /**
+     * Valida campos numericos y habilita botones segun la entrada.
+     *
+     * @param e evento de teclado recibido
+     */
     @Override
     public void keyReleased(KeyEvent e) {
 
@@ -268,16 +289,29 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         this.logAreaSimulacion.append(s + "\n");
     }
 
+    /**
+     * No se utiliza pero se implementa para cumplir el contrato KeyListener.
+     */
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
 
+    /**
+     * No se utiliza pero se implementa para cumplir el contrato KeyListener.
+     *
+     * @param e evento de teclado ignorado
+     */
     @Override
     public void keyPressed(KeyEvent e) {
 
     }
 
+    /**
+     * Refresca el contenido de la lista de asociados.
+     *
+     * @param asociados registros a mostrar
+     */
     @Override
     public void actualizarListas(List<Asociado> asociados) {
         listaModeloAsociados.clear();
@@ -289,6 +323,9 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
 
     
 
+    /**
+     * Limpia los campos del formulario de asociados y resetea botones.
+     */
     public void limpiarCamposAsociado() {
         campoNombre.setText("");
         campoDni.setText("");
@@ -296,6 +333,11 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         btnDarBajaAsociado.setEnabled(false);
     }
 
+    /**
+     * Gestiona la seleccion de la lista para habilitar acciones.
+     *
+     * @param e evento de cambio de seleccion
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getSource() == listaAsociados) {
@@ -312,6 +354,11 @@ public class VentanaPestanas extends JFrame implements IVista, KeyListener, List
         }
     }
 
+    /**
+     * Habilita o deshabilita los campos de carga segun el estado de la simulacion.
+     *
+     * @param estado true para habilitar entradas
+     */
     @Override
     public void cambiarEstadoInput(boolean estado) {
         this.campoDni.setText("");
