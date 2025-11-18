@@ -15,6 +15,17 @@ public  class Conexion {
     private static final String ROOT_USER = "root";
     private static final String ROOT_PASS = "root";
     private static final String DB_NAME = "Grupo_10";
+    private static  Conexion instancia = null;
+
+    private Conexion() {
+        // Constructor privado para evitar instanciacion
+    }
+    public static Conexion getInstance() {
+        if(instancia == null) {
+            instancia = new Conexion();
+        }
+        return instancia;
+    }
 
     /**
      * Obtiene una conexion activa hacia la base de datos de la aplicacion.
@@ -24,7 +35,7 @@ public  class Conexion {
      * <br>Post: Retorna un objeto Connection no nulo y abierto.
      * @throws SQLException si falla la carga del driver o la autenticacion
      */
-    public static Connection obtenerConexion() throws SQLException {
+    public Connection obtenerConexion() throws SQLException {
         Connection conn = null;
         try {
             Class.forName(JDBC_DRIVER); 
@@ -48,7 +59,7 @@ public  class Conexion {
      * <br>Pre: Las credenciales de ROOT son correctas y el servidor esta disponible.
      * <br>Post: La base de datos DB_NAME existe en el servidor.
      */
-    public static void crearBaseDatos() throws SQLException {
+    public  void crearBaseDatos() throws SQLException {
         String rootUrl = "jdbc:mariadb://localhost:3306/";
         String createDatabaseSQL = "CREATE DATABASE IF NOT EXISTS " + DB_NAME + " CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
         Connection conn = null;
@@ -77,7 +88,7 @@ public  class Conexion {
      * <br>Pre: Las credenciales de ROOT son correctas y el servidor esta disponible.
      * <br>Post: El usuario USER existe y tiene privilegios en la base de datos DB_NAME.
      */
-    public static void crearUsuario() throws SQLException {
+    public  void crearUsuario() throws SQLException {
         String rootUrl = "jdbc:mariadb://localhost:3306/";
         String createUserSQL = "CREATE USER IF NOT EXISTS '" + USER + "'@'localhost' IDENTIFIED BY '" + PASS + "';";
         String grantPermsSQL = "GRANT ALL PRIVILEGES ON " + DB_NAME + ".* TO '" + USER + "'@'localhost';";
@@ -116,12 +127,12 @@ public  class Conexion {
      * <br>Pre: La base de datos y el usuario de la aplicacion deben existir.
      * <br>Post: La tabla 'asociados' existe y esta vacia, con la estructura correcta.
      */
-    public static void limpiarYCrearTabla() throws SQLException {
+    public  void limpiarYCrearTabla() throws SQLException {
         Connection conn = null;
         Statement stmt = null;
         
         try {
-            conn = Conexion.obtenerConexion();
+            conn = obtenerConexion();
             // Invariante: Conexion obtenida
             assert conn != null && !conn.isClosed() : "La conexion debe ser valida y estar abierta.";
 
@@ -155,7 +166,7 @@ public  class Conexion {
      * <br>Pre: La tabla 'asociados' debe existir.
      * <br>Post: Se insertan exactamente 3 registros nuevos en la tabla 'asociados'.
      */
-    public static void insertarAsociados() throws SQLException {
+    public  void insertarAsociados() throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         String sql = "INSERT INTO asociados (nombre, dni, alta) VALUES (?, ?, ?)";

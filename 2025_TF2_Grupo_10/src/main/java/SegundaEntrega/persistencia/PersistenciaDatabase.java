@@ -31,7 +31,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         String sql = "SELECT id, nombre, alta, dni FROM asociados WHERE dni = ?"; // Se incluye 'id' para construir el DTO completo
 
         try {
-            conn = Conexion.obtenerConexion(); 
+            conn = Conexion.getInstance().obtenerConexion(); 
             // Invariante: La conexion debe ser valida y estar abierta
             assert conn != null && !conn.isClosed() : "La conexion debe ser valida y estar abierta.";
             
@@ -79,7 +79,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         String sql = "SELECT id, nombre, alta, dni FROM asociados"; // Se explicitan las columnas
 
         try {
-            conn = Conexion.obtenerConexion();
+            conn = Conexion.getInstance().obtenerConexion();
             // Invariante: La conexion debe ser valida y estar abierta
             assert conn != null && !conn.isClosed() : "La conexion debe ser valida y estar abierta.";
 
@@ -135,7 +135,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         int rowsAffected = 0;
         
         try {
-            conn = Conexion.obtenerConexion();
+            conn = Conexion.getInstance().obtenerConexion();
             // Invariante: La conexion debe ser valida y estar abierta
             assert conn != null && !conn.isClosed() : "La conexion debe ser valida y estar abierta.";
 
@@ -178,7 +178,7 @@ public class PersistenciaDatabase implements AsociadoDAO {
         int rowsAffected = 0;
 
         try {
-            conn = Conexion.obtenerConexion();
+            conn = Conexion.getInstance().obtenerConexion();
             // Invariante: La conexion debe ser valida y estar abierta
             assert conn != null && !conn.isClosed() : "La conexion debe ser valida y estar abierta.";
             

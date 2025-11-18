@@ -18,10 +18,10 @@ public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                Conexion.crearBaseDatos();
-                Conexion.crearUsuario();
-                Conexion.limpiarYCrearTabla();
-                Conexion.insertarAsociados();
+                Conexion.getInstance().crearBaseDatos();
+                Conexion.getInstance().crearUsuario();
+                Conexion.getInstance().limpiarYCrearTabla();
+                Conexion.getInstance().insertarAsociados();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
