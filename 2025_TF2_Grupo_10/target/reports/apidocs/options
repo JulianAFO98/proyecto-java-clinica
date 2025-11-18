@@ -1,22 +1,24 @@
+-classpath
+'C:/Users/julian/.m2/repository/org/mariadb/jdbc/mariadb-java-client/3.4.0/mariadb-java-client-3.4.0.jar;C:/Users/julian/.m2/repository/com/github/waffle/waffle-jna/3.3.0/waffle-jna-3.3.0.jar;C:/Users/julian/.m2/repository/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar;C:/Users/julian/.m2/repository/net/java/dev/jna/jna-platform/5.13.0/jna-platform-5.13.0.jar;C:/Users/julian/.m2/repository/org/slf4j/jcl-over-slf4j/2.0.7/jcl-over-slf4j-2.0.7.jar;C:/Users/julian/.m2/repository/org/slf4j/slf4j-api/2.0.7/slf4j-api-2.0.7.jar;C:/Users/julian/.m2/repository/com/github/ben-manes/caffeine/caffeine/2.9.3/caffeine-2.9.3.jar;C:/Users/julian/.m2/repository/com/google/errorprone/error_prone_annotations/2.10.0/error_prone_annotations-2.10.0.jar;C:/Users/julian/.m2/repository/org/checkerframework/checker-qual/3.32.0/checker-qual-3.32.0.jar'
 -encoding
 'windows-1252'
 -protected
 -sourcepath
-'C:/Users/julian/Desktop/proyecto-java/proyecto-java-clinica/proyecto-clinica/src/main/java'
+'C:/Users/julian/Desktop/proyecto-java/proyecto-java-clinica/2025_TF2_Grupo_10/src/main/java'
 -author
 -bottom
 'Copyright &#169; 2025. All rights reserved.'
 -charset
 'UTF-8'
 -d
-'C:/Users/julian/Desktop/proyecto-java/proyecto-java-clinica/proyecto-clinica/target/reports/apidocs'
+'C:/Users/julian/Desktop/proyecto-java/proyecto-java-clinica/2025_TF2_Grupo_10/target/reports/apidocs'
 -docencoding
 'UTF-8'
 -doctitle
-'proyecto-clinica 1.0-SNAPSHOT API'
+'2025_TF2_Grupo_10 1.0-SNAPSHOT API'
 -linkoffline
-'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/julian/Desktop/proyecto-java/proyecto-java-clinica/proyecto-clinica/target/javadoc-bundle-options'
+'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/julian/Desktop/proyecto-java/proyecto-java-clinica/2025_TF2_Grupo_10/target/javadoc-bundle-options'
 -use
 -version
 -windowtitle
-'proyecto-clinica 1.0-SNAPSHOT API'
+'2025_TF2_Grupo_10 1.0-SNAPSHOT API'

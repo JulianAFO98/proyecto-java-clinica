@@ -1,3 +1,11 @@
+SegundaEntrega
+SegundaEntrega.Patrones.PatronObserver
+SegundaEntrega.Patrones.PatronState
+SegundaEntrega.controlador
+SegundaEntrega.modelo.Datos
+SegundaEntrega.persistencia
+SegundaEntrega.utils
+SegundaEntrega.vista
 proyecto
 proyecto.modelo
 proyecto.modelo.Decorator

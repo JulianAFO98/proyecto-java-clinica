@@ -7,3 +7,11 @@ proyecto.modelo.Factura
 proyecto.modelo.Habitacion
 proyecto.modelo.interfaces
 proyecto.modelo.paciente
+SegundaEntrega
+SegundaEntrega.controlador
+SegundaEntrega.modelo.Datos
+SegundaEntrega.Patrones.PatronObserver
+SegundaEntrega.Patrones.PatronState
+SegundaEntrega.persistencia
+SegundaEntrega.utils
+SegundaEntrega.vista
